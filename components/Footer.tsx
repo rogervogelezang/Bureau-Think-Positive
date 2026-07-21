@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { diensten, doelgroepen } from "@/lib/nav";
 
+const keurmerken = [
+  { src: "/keurmerken/erkend-leerbedrijf.avif", alt: "Erkend leerbedrijf — Wij leiden vakmensen op" },
+  { src: "/keurmerken/iso9001.avif", alt: "ISO 9001 gecertificeerd" },
+  { src: "/keurmerken/vgct.avif", alt: "VGCt" },
+  { src: "/keurmerken/skj.avif", alt: "SKJ Kwaliteitsregister Jeugd" },
+];
+
 export default function Footer() {
   return (
     <footer className="mt-24 border-t border-border bg-primary-dark text-white">
@@ -79,10 +86,24 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+
+      <div className="border-t border-white/10 py-8">
+        <div className="container-page">
+          <p className="text-xs font-bold uppercase tracking-wide text-white/50">Keurmerken</p>
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            {keurmerken.map((k) => (
+              <div key={k.alt} className="flex h-16 items-center rounded-[var(--radius-sm)] bg-white px-4 py-2">
+                {/* eslint-disable-next-line @next/next/no-img-element -- small local badge images, no next/image benefit */}
+                <img src={k.src} alt={k.alt} className="h-full w-auto object-contain" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="border-t border-white/10 py-6">
         <div className="container-page flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/50">
           <p>&copy; {new Date().getFullYear()} Bureau Think Positive B.V. — KvK 72918500</p>
-          <p>SKJ geregistreerd</p>
         </div>
       </div>
     </footer>
