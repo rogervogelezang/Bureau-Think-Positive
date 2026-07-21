@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
-import PlaceholderBlock from "@/components/PlaceholderBlock";
 import TestimonialCard from "@/components/TestimonialCard";
 import { diensten } from "@/lib/nav";
 
@@ -55,7 +54,16 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <PlaceholderBlock variant="primary" className="h-72 sm:h-96" label="Bureau Think Positive" />
+          <div className="relative h-72 sm:h-96 overflow-hidden rounded-[var(--radius-lg)]">
+            <Image
+              src="/hero-gezin.jpg"
+              alt="Gezin samen — moeder, vader en tiener"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </Container>
       </section>
 
