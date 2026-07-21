@@ -10,4 +10,4 @@ notices in the terminal output.
 - App Router, TypeScript, Tailwind CSS v4 (theme tokens in `app/globals.css`).
 - `content/kennisbank/*.mdx` — knowledge-base articles, rendered via `app/kennisbank/[slug]/page.tsx`.
 - `lib/supabase/` — auth helpers for the ouderportaal (client/server/proxy split, same pattern as any Supabase+SSR Next.js app).
-- No photography is used anywhere on this site by design — illustration/color blocks only.
+- The site otherwise avoids photography by design (illustration/color blocks via `PlaceholderBlock` instead) — the homepage "Onze filosofie" photo (`public/onze-filosofie.jpg`) is a deliberate, client-provided exception, not a precedent to extend elsewhere without asking.

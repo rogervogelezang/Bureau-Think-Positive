@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
@@ -60,7 +61,15 @@ export default function HomePage() {
 
       <section className="py-16 sm:py-24 bg-background-elevated border-y border-border">
         <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <PlaceholderBlock variant="soft" className="h-64 sm:h-80 order-last lg:order-first" />
+          <div className="relative h-64 sm:h-80 order-last lg:order-first overflow-hidden rounded-[var(--radius-lg)]">
+            <Image
+              src="/onze-filosofie.jpg"
+              alt="Een jongen groeit op van baby tot jongvolwassene"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div>
             <SectionHeading
               eyebrow="Onze filosofie"
