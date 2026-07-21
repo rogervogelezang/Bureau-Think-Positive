@@ -6,6 +6,11 @@ import { mainNav } from "@/lib/nav";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  function toggleExpanded(href: string) {
+    setExpanded((prev) => ({ ...prev, [href]: !prev[href] }));
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
@@ -70,18 +75,40 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-background">
+        <div className="lg:hidden border-t border-border bg-background max-h-[calc(100dvh-5rem)] overflow-y-auto">
           <div className="container-page py-4 flex flex-col gap-1">
             {mainNav.map((item) => (
-              <div key={item.href} className="mb-2">
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block rounded-[var(--radius-sm)] px-3 py-2 font-semibold text-foreground"
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
+              <div key={item.href} className="mb-1">
+                <div className="flex items-center">
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 rounded-[var(--radius-sm)] px-3 py-2 font-semibold text-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <button
+                      type="button"
+                      onClick={() => toggleExpanded(item.href)}
+                      aria-expanded={!!expanded[item.href]}
+                      aria-label={`${item.label} submenu tonen`}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center text-muted"
+                    >
+                      <svg
+                        width="12"
+                        height="8"
+                        viewBox="0 0 12 8"
+                        fill="none"
+                        aria-hidden
+                        className={`transition-transform ${expanded[item.href] ? "rotate-180" : ""}`}
+                      >
+                        <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+                {item.children && expanded[item.href] && (
                   <div className="ml-3 flex flex-col">
                     {item.children.map((child) => (
                       <Link
