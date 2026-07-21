@@ -10,11 +10,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="container-page flex h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-display text-lg font-extrabold text-primary-dark">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-primary-dark">
-            ★
-          </span>
-          Bureau Think Positive
+        <Link href="/" className="flex items-center">
+          <img src="/logo.svg" alt="Bureau Think Positive" className="h-16 w-auto" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">

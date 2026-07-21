@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="mt-24 border-t border-border bg-primary-dark text-white">
       <div className="container-page py-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-lg font-extrabold">Bureau Think Positive</p>
+          <img src="/logo.svg" alt="Bureau Think Positive" className="h-20 w-auto" />
           <p className="mt-3 text-sm text-white/70 text-pretty">
             Specialistische ambulante begeleiding, crisisinterventie en coaching voor jongeren en
             hun gezin. Kleinschalig, korte lijnen, hart voor de jongeren.
