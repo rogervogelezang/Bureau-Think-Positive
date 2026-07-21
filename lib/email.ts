@@ -10,7 +10,7 @@ function getResendClient(): Resend | null {
 }
 
 const FROM_ADDRESS = process.env.RESEND_FROM_EMAIL ?? "Bureau Think Positive <onboarding@resend.dev>";
-const ADMIN_ALERT_EMAIL = process.env.ADMIN_ALERT_EMAIL ?? "info@bureauthinkpositive.nl";
+const ADMIN_ALERT_EMAIL = process.env.ADMIN_ALERT_EMAIL ?? "info@bureauthinkpositive.com";
 
 function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);

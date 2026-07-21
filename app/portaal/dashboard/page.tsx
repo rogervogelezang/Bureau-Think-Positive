@@ -34,7 +34,7 @@ export default async function PortaalDashboardPage() {
       <Container>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="eyebrow mb-2">Oudersportaal</p>
+            <p className="eyebrow mb-2">Ouderportaal</p>
             <h1 className="text-3xl font-extrabold">Welkom terug</h1>
             <p className="mt-1 text-sm text-muted">{user.email}</p>
           </div>

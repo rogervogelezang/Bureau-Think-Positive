@@ -32,7 +32,7 @@ export default function PortaalLoginPage() {
   }
 
   return (
-    <AuthCard title="Inloggen" subtitle="Welkom terug in het oudersportaal.">
+    <AuthCard title="Inloggen" subtitle="Welkom terug in het ouderportaal.">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
           <label htmlFor="email" className="mb-1 block text-sm text-muted">

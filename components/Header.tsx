@@ -54,7 +54,7 @@ export default function Header() {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link href="/portaal" className="btn btn-outline text-sm">
-            Oudersportaal
+            Ouderportaal
           </Link>
           <Link href="/contact" className="btn btn-primary text-sm">
             Neem contact op
@@ -125,7 +125,7 @@ export default function Header() {
               </div>
             ))}
             <Link href="/portaal" onClick={() => setMobileOpen(false)} className="btn btn-outline mt-2 w-full">
-              Oudersportaal
+              Ouderportaal
             </Link>
             <Link href="/contact" onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
               Neem contact op

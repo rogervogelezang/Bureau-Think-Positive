@@ -14,7 +14,7 @@ export default function AuthCard({
     <section className="py-16 sm:py-24">
       <div className="mx-auto w-full max-w-md px-6">
         <Link href="/portaal" className="mb-6 inline-block text-sm font-semibold text-primary hover:underline">
-          ← Terug naar het oudersportaal
+          ← Terug naar het ouderportaal
         </Link>
         <div className="card p-8">
           <h1 className="font-display text-2xl font-extrabold">{title}</h1>

@@ -63,7 +63,7 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/portaal" className="hover:text-white">
-                Oudersportaal
+                Ouderportaal
               </Link>
             </li>
             <li>

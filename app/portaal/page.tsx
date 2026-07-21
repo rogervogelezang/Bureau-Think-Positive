@@ -4,7 +4,7 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import PlaceholderBlock from "@/components/PlaceholderBlock";
 
-export const metadata: Metadata = { title: "Oudersportaal" };
+export const metadata: Metadata = { title: "Ouderportaal" };
 
 const features = [
   {
@@ -27,9 +27,9 @@ export default function PortaalPage() {
       <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
         <div>
           <p className="eyebrow mb-4">Voor ouders &amp; verzorgers</p>
-          <h1 className="text-4xl font-extrabold text-balance">Het oudersportaal</h1>
+          <h1 className="text-4xl font-extrabold text-balance">Het ouderportaal</h1>
           <p className="mt-6 text-lg text-muted text-pretty">
-            Korte lijnen horen bij onze werkwijze — ook digitaal. In het oudersportaal houdt u
+            Korte lijnen horen bij onze werkwijze — ook digitaal. In het ouderportaal houdt u
             straks eenvoudig zicht op de voortgang, documenten en berichten rond de begeleiding
             van uw kind.
           </p>
@@ -42,7 +42,7 @@ export default function PortaalPage() {
             </Link>
           </div>
         </div>
-        <PlaceholderBlock variant="soft" className="h-72 sm:h-96" label="Oudersportaal" />
+        <PlaceholderBlock variant="soft" className="h-72 sm:h-96" label="Ouderportaal" />
       </Container>
 
       <Container className="mt-20">

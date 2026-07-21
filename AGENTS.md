@@ -9,5 +9,5 @@ notices in the terminal output.
 
 - App Router, TypeScript, Tailwind CSS v4 (theme tokens in `app/globals.css`).
 - `content/kennisbank/*.mdx` — knowledge-base articles, rendered via `app/kennisbank/[slug]/page.tsx`.
-- `lib/supabase/` — auth helpers for the oudersportaal (client/server/proxy split, same pattern as any Supabase+SSR Next.js app).
+- `lib/supabase/` — auth helpers for the ouderportaal (client/server/proxy split, same pattern as any Supabase+SSR Next.js app).
 - No photography is used anywhere on this site by design — illustration/color blocks only.

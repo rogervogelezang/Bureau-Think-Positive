@@ -7,7 +7,7 @@ const AUTH_PAGES = ["/portaal/login", "/portaal/registreren"];
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  // The oudersportaal's Supabase project isn't provisioned in every
+  // The ouderportaal's Supabase project isn't provisioned in every
   // environment yet (see .env.local.example) — fall through instead of
   // crashing every single page on the site over an unconfigured portal.
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
