@@ -5,7 +5,7 @@ import PlaceholderBlock from "@/components/PlaceholderBlock";
 
 export const metadata: Metadata = { title: "Het kernteam" };
 
-const placeholderMembers = Array.from({ length: 5 }, (_, i) => i + 1);
+const placeholderMembers = Array.from({ length: 3 }, (_, i) => i + 1);
 
 export default function KernteamPage() {
   return (
