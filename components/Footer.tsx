@@ -10,7 +10,10 @@ const keurmerken = [
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-primary-dark text-white">
+    <footer
+      className="mt-24 border-t border-border bg-primary-dark text-white"
+      style={{ viewTransitionName: "site-footer" }}
+    >
       <div className="container-page py-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <img src="/logo.svg" alt="Bureau Think Positive" className="h-20 w-auto" />

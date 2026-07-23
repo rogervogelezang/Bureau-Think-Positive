@@ -270,18 +270,39 @@ h4 {
 
 /* ============================================================
    Page transitions — the <ViewTransition> wrapping {children} in
-   app/layout.tsx only covers the main content (Header/Footer live
-   outside it and stay static). Wildcard selectors, rather than
-   ::view-transition-old/new(root), since the wrapped boundary here isn't
-   the document root — this matches whatever name React assigns it.
-   A soft cross-fade + gentle scale: enough to feel intentional without
-   being a distracting slide or flash.
+   app/layout.tsx only covers the main content, but the browser's native
+   View Transitions API snapshots the whole viewport by default (including
+   Header/Footer), so a wildcard fade would briefly freeze them mid-
+   interaction — e.g. a hover dropdown caught open at the moment of
+   navigation stays visible, frozen, for the whole transition. Header and
+   Footer get their own view-transition-name (see components/Header.tsx,
+   components/Footer.tsx) so they're excluded from the wildcard rule below
+   and never get snapshotted — they simply stay live and static, per the
+   "anchoring the header" pattern in the Next.js view-transitions guide.
+
+   Slow, unhurried timing on purpose: this should feel like the same calm
+   we bring to the young people we guide, not a snappy UI flourish. The
+   old page settles away before the new one gently arrives, rather than
+   both racing past each other at once.
    ============================================================ */
 ::view-transition-old(*) {
-  animation: page-fade-out 220ms cubic-bezier(0.4, 0, 1, 1) both;
+  animation: page-fade-out 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 ::view-transition-new(*) {
-  animation: page-fade-in 260ms cubic-bezier(0, 0, 0.2, 1) both;
+  animation: page-fade-in 620ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
+}
+
+::view-transition-group(site-header),
+::view-transition-group(site-footer) {
+  animation: none;
+}
+::view-transition-old(site-header),
+::view-transition-old(site-footer) {
+  display: none;
+}
+::view-transition-new(site-header),
+::view-transition-new(site-footer) {
+  animation: none;
 }
 
 @keyframes page-fade-out {
@@ -293,7 +314,7 @@ h4 {
 @keyframes page-fade-in {
   from {
     opacity: 0;
-    transform: scale(1.01);
+    transform: scale(1.008);
   }
 }
 
