@@ -9,15 +9,19 @@ export const metadata: Metadata = { title: "Ouderportaal" };
 const features = [
   {
     title: "Voortgang",
-    body: "Volg op hoofdlijnen hoe het traject van uw kind verloopt, in duidelijke taal.",
+    body: "Een duidelijke voortgangsscore, bijgehouden door de trajectleider van uw kind.",
   },
   {
-    title: "Documenten & rapportages",
-    body: "Vind zorgplannen, evaluaties en rapportages op één centrale plek terug.",
+    title: "Doelen",
+    body: "Zie welke doelen er zijn gesteld en hoe het daarmee staat.",
   },
   {
-    title: "Berichten",
-    body: "Korte lijnen met de begeleider van uw kind, ook tussen de afspraken door.",
+    title: "Agenda",
+    body: "Individuele afspraken én groepsbegeleiding (midweek/weekend), overzichtelijk op een rij.",
+  },
+  {
+    title: "Updates",
+    body: "Korte berichten van de begeleiding, rechtstreeks in uw portaal.",
   },
 ];
 
@@ -30,8 +34,8 @@ export default function PortaalPage() {
           <h1 className="text-4xl font-extrabold text-balance">Het ouderportaal</h1>
           <p className="mt-6 text-lg text-muted text-pretty">
             Korte lijnen horen bij onze werkwijze — ook digitaal. In het ouderportaal houdt u
-            straks eenvoudig zicht op de voortgang, documenten en berichten rond de begeleiding
-            van uw kind.
+            eenvoudig zicht op de voortgang, doelen, agenda en updates rond de begeleiding van uw
+            kind.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/portaal/login" className="btn btn-primary">
@@ -47,7 +51,7 @@ export default function PortaalPage() {
 
       <Container className="mt-20">
         <SectionHeading eyebrow="Wat kunt u verwachten" title="Alles rond de begeleiding, overzichtelijk bij elkaar" />
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((f) => (
             <div key={f.title} className="card p-6">
               <h3 className="font-display text-lg font-bold text-primary-dark">{f.title}</h3>
@@ -56,12 +60,18 @@ export default function PortaalPage() {
           ))}
         </div>
         <p className="mt-8 text-sm text-muted max-w-2xl">
-          Het portaal wordt de komende tijd verder gevuld. Heeft u nu al vragen over het traject
-          van uw kind? Neem dan gerust{" "}
+          Heeft u vragen over het traject van uw kind? Neem dan gerust{" "}
           <Link href="/contact" className="font-semibold text-primary hover:underline">
             contact
           </Link>{" "}
           op — dat blijft altijd de snelste weg.
+        </p>
+        <p className="mt-4 text-xs text-muted">
+          Bureau Think Positive medewerker?{" "}
+          <Link href="/portaal/team/login" className="hover:underline">
+            Log hier in
+          </Link>
+          .
         </p>
       </Container>
     </section>

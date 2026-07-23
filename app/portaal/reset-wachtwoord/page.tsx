@@ -20,14 +20,27 @@ export default function ResetWachtwoordPage() {
     const supabase = createClient();
     const { error: updateError } = await supabase.auth.updateUser({ password });
 
-    setLoading(false);
     if (updateError) {
+      setLoading(false);
       setError("Er ging iets mis bij het opslaan van je nieuwe wachtwoord.");
       return;
     }
+
+    // Trajectleiders and ouders share this flow — send each to their own
+    // dashboard afterward, based on whether a trajectleiders row exists.
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const { data: trajectleider } = await supabase
+      .from("trajectleiders")
+      .select("id")
+      .eq("id", user?.id ?? "")
+      .maybeSingle();
+
+    setLoading(false);
     setDone(true);
     setTimeout(() => {
-      router.push("/portaal/dashboard");
+      router.push(trajectleider ? "/portaal/team/dashboard" : "/portaal/dashboard");
       router.refresh();
     }, 1500);
   }
