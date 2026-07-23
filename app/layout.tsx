@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
+import { ViewTransition } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -33,7 +34,12 @@ export default function RootLayout({
     <html lang="nl" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          {/* Header/Footer live outside this boundary on purpose, so they
+              stay static — only the page content itself cross-fades between
+              routes. See ::view-transition-old/new(*) in globals.css. */}
+          <ViewTransition>{children}</ViewTransition>
+        </main>
         <Footer />
       </body>
     </html>

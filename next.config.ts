@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return legacyRedirects;
   },
+  // Powers the soft cross-fade between pages — see <ViewTransition> in
+  // app/layout.tsx and the ::view-transition-old/new(*) rules in
+  // app/globals.css.
+  experimental: {
+    viewTransition: true,
+  },
 };
 
 const withMDX = createMDX({});

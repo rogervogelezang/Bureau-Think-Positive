@@ -53,6 +53,10 @@
   --font-display: var(--font-heading);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -68,6 +72,28 @@ h4 {
   letter-spacing: -0.01em;
 }
 
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* Webkit-only — degrades to the default scrollbar everywhere else. */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 3px solid var(--background);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
 @layer base {
   a,
   button,
@@ -80,6 +106,20 @@ h4 {
       border-color 0.16s ease,
       box-shadow 0.16s ease,
       transform 0.16s ease;
+  }
+
+  /* Consistent, on-brand keyboard-focus ring — without this, interactive
+     elements fall back to the browser's default blue outline, which
+     clashes with the palette and looks unpolished against rounded pill
+     buttons. Only shows for keyboard/programmatic focus, not mouse clicks. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -94,7 +134,7 @@ h4 {
     background: var(--background-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 1px 2px rgba(28, 35, 51, 0.04);
+    box-shadow: 0 2px 6px rgba(28, 35, 51, 0.05);
   }
 
   .btn {
@@ -107,14 +147,25 @@ h4 {
     padding: 0.75rem 1.5rem;
     text-align: center;
   }
+  /* Small lift on hover, settles back on press — the same tactile
+     language as the card hover effect elsewhere, so buttons don't feel
+     flat by comparison. */
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn:active {
+    transform: translateY(0);
+  }
 
   .btn-primary {
     background: var(--accent);
     color: var(--primary-dark);
+    box-shadow: 0 2px 8px rgba(245, 166, 35, 0.25);
   }
   .btn-primary:hover {
     background: var(--accent-dark);
     color: white;
+    box-shadow: 0 4px 14px rgba(201, 130, 15, 0.35);
   }
 
   .btn-secondary {
@@ -190,6 +241,8 @@ h4 {
   .prose-kennisbank a {
     color: var(--primary);
     text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1.5px;
   }
   .prose-kennisbank strong {
     color: var(--foreground);
@@ -212,5 +265,43 @@ h4 {
     border: 1.5px dashed var(--primary);
     border-radius: var(--radius-md);
     color: var(--primary-dark);
+  }
+}
+
+/* ============================================================
+   Page transitions — the <ViewTransition> wrapping {children} in
+   app/layout.tsx only covers the main content (Header/Footer live
+   outside it and stay static). Wildcard selectors, rather than
+   ::view-transition-old/new(root), since the wrapped boundary here isn't
+   the document root — this matches whatever name React assigns it.
+   A soft cross-fade + gentle scale: enough to feel intentional without
+   being a distracting slide or flash.
+   ============================================================ */
+::view-transition-old(*) {
+  animation: page-fade-out 220ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(*) {
+  animation: page-fade-in 260ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+}
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }
