@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
-import PlaceholderBlock from "@/components/PlaceholderBlock";
 
 export const metadata: Metadata = { title: "Het kernteam" };
 
-const placeholderMembers = Array.from({ length: 3 }, (_, i) => i + 1);
+const teamMembers = [
+  { name: "Mark van Onselen", role: "Lid kernteam", photo: "/kernteam/mark-van-onselen.jpg" },
+  { name: "Silvia de Brabander", role: "Lid kernteam", photo: "/kernteam/silvia-de-brabander.jpg" },
+  { name: "Diana Eskens Lodder", role: "Lid kernteam", photo: "/kernteam/diana-eskens-lodder.jpg" },
+];
 
 export default function KernteamPage() {
   return (
@@ -14,14 +18,22 @@ export default function KernteamPage() {
         <SectionHeading
           eyebrow="Het kernteam"
           title="De mensen achter Bureau Think Positive"
-          intro="Trajectleider en oprichter, aangevuld met een team van zeer gedreven en ervaren zorgprofessionals — elk met hun eigen expertise en skills."
+          intro="Oprichter en zorg coördinator, aangevuld met een team van zeer gedreven en ervaren zorgprofessionals — elk met hun eigen expertise en skills."
         />
 
         <div className="mt-12 card p-8 sm:p-10 grid gap-8 lg:grid-cols-[auto_1fr] lg:items-start">
-          <PlaceholderBlock variant="primary" className="h-40 w-40 rounded-full" label="RV" />
+          <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full">
+            <Image
+              src="/kernteam/roger-vogelezang.jpg"
+              alt="Roger Vogelezang"
+              fill
+              sizes="160px"
+              className="object-cover object-top"
+            />
+          </div>
           <div>
             <h3 className="font-display text-2xl font-extrabold">Roger Vogelezang</h3>
-            <p className="mt-1 font-semibold text-primary">Oprichter &amp; trajectleider</p>
+            <p className="mt-1 font-semibold text-primary">Oprichter &amp; zorg coördinator</p>
             <p className="mt-4 text-muted text-pretty leading-relaxed">
               Hbo Culturele en Maatschappelijke Vorming (Haagsche Hogeschool, 1995). Werkte
               jarenlang als interim agressiecoach, sociotherapeut en specialistisch psychiatrisch
@@ -34,15 +46,14 @@ export default function KernteamPage() {
 
         <div className="mt-16">
           <h3 className="font-display text-xl font-extrabold">Onze specialisten</h3>
-          <p className="mt-2 text-muted text-pretty">
-            Deze plekken worden binnenkort gevuld met de rest van het kernteam.
-          </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {placeholderMembers.map((n) => (
-              <div key={n} className="placeholder-block p-8 text-center">
-                <div className="mx-auto h-16 w-16 rounded-full bg-white/60" />
-                <p className="mt-4 font-semibold">Naam volgt</p>
-                <p className="text-sm">Functie / expertise</p>
+            {teamMembers.map((m) => (
+              <div key={m.name} className="card p-8 text-center">
+                <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full">
+                  <Image src={m.photo} alt={m.name} fill sizes="96px" className="object-cover object-top" />
+                </div>
+                <p className="mt-4 font-semibold">{m.name}</p>
+                <p className="text-sm text-muted">{m.role}</p>
               </div>
             ))}
           </div>

@@ -10,4 +10,4 @@ notices in the terminal output.
 - App Router, TypeScript, Tailwind CSS v4 (theme tokens in `app/globals.css`).
 - `content/kennisbank/*.mdx` — knowledge-base articles, rendered via `app/kennisbank/[slug]/page.tsx`.
 - `lib/supabase/` — auth helpers for the ouderportaal (client/server/proxy split, same pattern as any Supabase+SSR Next.js app).
-- The site otherwise avoids photography by design (illustration/color blocks via `PlaceholderBlock` instead) — the homepage "Onze filosofie" photo (`public/onze-filosofie.jpg`) is a deliberate, client-provided exception, not a precedent to extend elsewhere without asking.
+- Marketing/service pages still avoid stock photography by design (`PlaceholderBlock` for illustration/color blocks). Real, client-provided photos are used where they represent actual people or the actual business: the homepage hero/philosophy photos (`public/onze-filosofie.jpg`, `public/hero-gezin.jpg`) and kernteam headshots (`public/kernteam/*.jpg`). Don't add stock/generic photography elsewhere without asking — only real, client-supplied images.
