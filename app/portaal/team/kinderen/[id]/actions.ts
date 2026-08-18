@@ -3,8 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
-import { requireTrajectleider } from "@/lib/supabase/trajectleider";
+import { requireTrajectleider, requireCoordinator } from "@/lib/supabase/trajectleider";
 
 export async function addScoreAction(formData: FormData) {
   const trajectleider = await requireTrajectleider();
@@ -47,15 +46,22 @@ export async function updateDoelStatusAction(formData: FormData) {
   const status = formData.get("status")?.toString() ?? "";
 
   const supabase = await createClient();
-  await supabase.from("doelen").update({ status, updated_at: new Date().toISOString() }).eq("id", doelId);
+  const { error } = await supabase
+    .from("doelen")
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq("id", doelId);
+  if (error) redirect(`/portaal/team/kinderen/${kindId}?error=doel_status_mislukt`);
 
   revalidatePath(`/portaal/team/kinderen/${kindId}`);
   redirect(`/portaal/team/kinderen/${kindId}`);
 }
 
-// Links an existing ouder account (found by email) to this kind. The
-// lookup needs the admin client since auth.users isn't queryable through
-// the regular RLS-scoped client — the link itself (writing kinderen.ouder_id)
+// Links an existing ouder account (found by email) to this kind. The lookup
+// goes through the find_ouder_id_by_email RPC (security definer, gated to
+// staff only, returns just one id) instead of the service-role admin
+// client's bulk listUsers() — that would otherwise hand any trajectleider,
+// coordinator or not, a dump of up to 1000 platform accounts to search
+// through just to link one ouder. The link itself (writing kinderen.ouder_id)
 // still goes through the normal client so RLS keeps enforcing who's allowed
 // to edit this row.
 export async function koppelOuderAction(formData: FormData) {
@@ -64,14 +70,11 @@ export async function koppelOuderAction(formData: FormData) {
   const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
   if (!kindId || !email) redirect(`/portaal/team/kinderen/${kindId}?error=email_verplicht`);
 
-  const admin = getSupabaseAdmin();
-  const { data: usersPage } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
-  const match = usersPage?.users.find((u) => u.email?.toLowerCase() === email);
-
-  if (!match) redirect(`/portaal/team/kinderen/${kindId}?error=ouder_niet_gevonden`);
-
   const supabase = await createClient();
-  const { error } = await supabase.from("kinderen").update({ ouder_id: match.id }).eq("id", kindId);
+  const { data: ouderId } = await supabase.rpc("find_ouder_id_by_email", { email_input: email });
+  if (!ouderId) redirect(`/portaal/team/kinderen/${kindId}?error=ouder_niet_gevonden`);
+
+  const { error } = await supabase.from("kinderen").update({ ouder_id: ouderId }).eq("id", kindId);
   if (error) redirect(`/portaal/team/kinderen/${kindId}?error=koppelen_mislukt`);
 
   revalidatePath(`/portaal/team/kinderen/${kindId}`);
@@ -79,15 +82,18 @@ export async function koppelOuderAction(formData: FormData) {
 }
 
 export async function reassignTrajectleiderAction(formData: FormData) {
-  const trajectleider = await requireTrajectleider();
-  if (!trajectleider.is_coordinator) redirect("/portaal/team/dashboard");
+  await requireCoordinator();
 
   const kindId = formData.get("kind_id")?.toString() ?? "";
   const nieuweTrajectleiderId = formData.get("trajectleider_id")?.toString() ?? "";
   if (!kindId || !nieuweTrajectleiderId) redirect(`/portaal/team/kinderen/${kindId}`);
 
   const supabase = await createClient();
-  await supabase.from("kinderen").update({ trajectleider_id: nieuweTrajectleiderId }).eq("id", kindId);
+  const { error } = await supabase
+    .from("kinderen")
+    .update({ trajectleider_id: nieuweTrajectleiderId })
+    .eq("id", kindId);
+  if (error) redirect(`/portaal/team/kinderen/${kindId}?error=toewijzen_mislukt`);
 
   revalidatePath(`/portaal/team/kinderen/${kindId}`);
   redirect(`/portaal/team/kinderen/${kindId}`);

@@ -4,13 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
-import { requireTrajectleider } from "@/lib/supabase/trajectleider";
-
-async function requireCoordinator() {
-  const trajectleider = await requireTrajectleider();
-  if (!trajectleider.is_coordinator) redirect("/portaal/team/dashboard");
-  return trajectleider;
-}
+import { requireCoordinator } from "@/lib/supabase/trajectleider";
 
 // Uses Supabase's built-in invite flow: creates the auth user and emails
 // them a link to set their own password — no custom email template needed.
@@ -46,7 +40,8 @@ export async function toggleCoordinatorAction(formData: FormData) {
   const nieuweStatus = formData.get("nieuwe_status") === "true";
 
   const supabase = await createClient();
-  await supabase.from("trajectleiders").update({ is_coordinator: nieuweStatus }).eq("id", id);
+  const { error } = await supabase.from("trajectleiders").update({ is_coordinator: nieuweStatus }).eq("id", id);
+  if (error) redirect("/portaal/team/beheer?error=status_wijzigen_mislukt");
 
   revalidatePath("/portaal/team/beheer");
   redirect("/portaal/team/beheer");

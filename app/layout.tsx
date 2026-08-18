@@ -16,13 +16,29 @@ const body = Inter({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const DEFAULT_DESCRIPTION =
+  "Bureau Think Positive biedt specialistische ambulante begeleiding, crisisinterventie en coaching voor jongeren en hun gezin. Kleinschalig, betrokken en oplossingsgericht.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Bureau Think Positive — Jeugdzorg met een positieve aanpak",
     template: "%s | Bureau Think Positive",
   },
-  description:
-    "Bureau Think Positive biedt specialistische ambulante begeleiding, crisisinterventie en coaching voor jongeren en hun gezin. Kleinschalig, betrokken en oplossingsgericht.",
+  description: DEFAULT_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    locale: "nl_NL",
+    siteName: "Bureau Think Positive",
+    title: "Bureau Think Positive — Jeugdzorg met een positieve aanpak",
+    description: DEFAULT_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: "Bureau Think Positive — Jeugdzorg met een positieve aanpak",
+    description: DEFAULT_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

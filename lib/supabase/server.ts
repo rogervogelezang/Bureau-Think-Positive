@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // For use in Server Components, Server Actions, and Route Handlers.
 // Reads/writes the session via Next.js's cookie store.
@@ -27,4 +28,12 @@ export async function createClient() {
       },
     },
   );
+}
+
+// Shared by the ouder and trajectleider sign-out actions — identical apart
+// from where each portal sends the user afterward.
+export async function signOutAndRedirect(target: string): Promise<never> {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect(target);
 }

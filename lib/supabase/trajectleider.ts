@@ -31,3 +31,12 @@ export async function requireTrajectleider(): Promise<Trajectleider> {
 
   return data as Trajectleider;
 }
+
+// Call at the top of every coordinator-only page/action (beheer, and any
+// action touching the service-role admin client). Redirects non-coordinator
+// trajectleiders back to the team dashboard instead of letting them proceed.
+export async function requireCoordinator(): Promise<Trajectleider> {
+  const trajectleider = await requireTrajectleider();
+  if (!trajectleider.is_coordinator) redirect("/portaal/team/dashboard");
+  return trajectleider;
+}

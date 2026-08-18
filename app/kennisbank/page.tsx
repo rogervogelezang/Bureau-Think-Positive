@@ -4,7 +4,10 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { getAllKennisbankArticles } from "@/lib/kennisbank";
 
-export const metadata: Metadata = { title: "Kennisbank" };
+export const metadata: Metadata = {
+  title: "Kennisbank",
+  description: "Artikelen over de theorieën, methodieken en tools die Bureau Think Positive in de praktijk gebruikt.",
+};
 
 export default function KennisbankHubPage() {
   const articles = getAllKennisbankArticles();
@@ -16,6 +19,7 @@ export default function KennisbankHubPage() {
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Kennisbank"
           title="Methodieken, modellen en werkvormen"
           intro="Onze verzameling artikelen over de theorieën, methodieken en tools die we in de praktijk gebruiken."

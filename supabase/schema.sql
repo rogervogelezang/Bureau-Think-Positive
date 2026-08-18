@@ -66,6 +66,25 @@ as $$
   select exists (select 1 from trajectleiders where id = check_user_id and is_coordinator);
 $$;
 
+-- Lets a trajectleider look up an ouder account by exact email (to link it
+-- to a kind) without ever handing the caller a bulk user listing. Gated to
+-- staff only, and returns nothing beyond the single matching id — a much
+-- narrower exposure than admin.auth.admin.listUsers(), which would dump up
+-- to 1000 platform accounts (emails + ids) into any trajectleider's hands.
+create or replace function public.find_ouder_id_by_email(email_input text)
+returns uuid
+language plpgsql
+security definer set search_path = public
+stable
+as $$
+begin
+  if not is_trajectleider() then
+    return null;
+  end if;
+  return (select id from auth.users where lower(email) = lower(email_input) limit 1);
+end;
+$$;
+
 drop policy if exists "trajectleiders can view own row, coordinators view all" on trajectleiders;
 create policy "trajectleiders can view own row, coordinators view all" on trajectleiders
   for select using (auth.uid() = id or is_coordinator());
@@ -111,10 +130,15 @@ create policy "trajectleiders kunnen eigen kinderen aanmaken" on kinderen
     is_trajectleider() and (trajectleider_id = auth.uid() or is_coordinator())
   );
 
+-- The with-check's is_trajectleider(trajectleider_id) guards against ever
+-- reassigning a kind to a user id that isn't a real trajectleider (e.g. an
+-- ouder's own id) — without it, that account's auth.uid() would start
+-- matching trajectleider_id = auth.uid() on this and every child table's
+-- policies, silently granting it staff-level access to that one gezin.
 drop policy if exists "trajectleiders en coordinatoren kunnen kinderen bewerken" on kinderen;
 create policy "trajectleiders en coordinatoren kunnen kinderen bewerken" on kinderen
   for update using (auth.uid() = trajectleider_id or is_coordinator())
-  with check (auth.uid() = trajectleider_id or is_coordinator());
+  with check ((auth.uid() = trajectleider_id or is_coordinator()) and is_trajectleider(trajectleider_id));
 
 drop policy if exists "coordinatoren kunnen kinderen verwijderen" on kinderen;
 create policy "coordinatoren kunnen kinderen verwijderen" on kinderen
@@ -290,6 +314,11 @@ create policy "betrokkenen zien deelnemers" on agenda_deelnemers
     )
   );
 
+-- Both the agenda item AND the kind being attached to it must belong to
+-- the caller (or a coordinator) — checking only the agenda item would let
+-- a trajectleider attach a kind_id they don't manage (any guessable UUID)
+-- to their own item, leaking that unrelated gezin's pairing to its real
+-- ouder/trajectleider via the "betrokkenen zien deelnemers" select policy.
 drop policy if exists "eigenaar van agenda item beheert deelnemers" on agenda_deelnemers;
 create policy "eigenaar van agenda item beheert deelnemers" on agenda_deelnemers
   for all using (
@@ -298,11 +327,21 @@ create policy "eigenaar van agenda item beheert deelnemers" on agenda_deelnemers
       where agenda_items.id = agenda_deelnemers.agenda_item_id
         and (agenda_items.trajectleider_id = auth.uid() or is_coordinator())
     )
+    and exists (
+      select 1 from kinderen
+      where kinderen.id = agenda_deelnemers.kind_id
+        and (kinderen.trajectleider_id = auth.uid() or is_coordinator())
+    )
   ) with check (
     exists (
       select 1 from agenda_items
       where agenda_items.id = agenda_item_id
         and (agenda_items.trajectleider_id = auth.uid() or is_coordinator())
+    )
+    and exists (
+      select 1 from kinderen
+      where kinderen.id = kind_id
+        and (kinderen.trajectleider_id = auth.uid() or is_coordinator())
     )
   );
 
@@ -373,6 +412,8 @@ create policy "betrokkenen zien update ontvangers" on update_ontvangers
     )
   );
 
+-- Same reasoning as agenda_deelnemers above: both the update AND the kind
+-- being targeted must belong to the caller (or a coordinator).
 drop policy if exists "eigenaar van update beheert ontvangers" on update_ontvangers;
 create policy "eigenaar van update beheert ontvangers" on update_ontvangers
   for all using (
@@ -381,10 +422,20 @@ create policy "eigenaar van update beheert ontvangers" on update_ontvangers
       where updates.id = update_ontvangers.update_id
         and (updates.trajectleider_id = auth.uid() or is_coordinator())
     )
+    and exists (
+      select 1 from kinderen
+      where kinderen.id = update_ontvangers.kind_id
+        and (kinderen.trajectleider_id = auth.uid() or is_coordinator())
+    )
   ) with check (
     exists (
       select 1 from updates
       where updates.id = update_id
         and (updates.trajectleider_id = auth.uid() or is_coordinator())
+    )
+    and exists (
+      select 1 from kinderen
+      where kinderen.id = kind_id
+        and (kinderen.trajectleider_id = auth.uid() or is_coordinator())
     )
   );

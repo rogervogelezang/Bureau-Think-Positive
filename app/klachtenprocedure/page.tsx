@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
-import SectionHeading from "@/components/SectionHeading";
 
-export const metadata: Metadata = { title: "Klachtenprocedure" };
+export const metadata: Metadata = {
+  title: "Klachtenprocedure",
+  description: "Hoe Bureau Think Positive omgaat met klachten, en hoe u een klacht kunt indienen.",
+};
 
 const stappen = [
   {
@@ -27,11 +29,13 @@ export default function KlachtenprocedurePage() {
   return (
     <section className="py-16 sm:py-20">
       <Container className="max-w-3xl">
-        <SectionHeading
-          eyebrow="Klachtenprocedure"
-          title="Niet tevreden? Dit zijn uw stappen"
-          intro="Wij van Bureau Think Positive doen ons best om onze dienstverlening zo goed mogelijk uit te voeren. Bij de uitvoering daarvan kan het voorkomen dat u niet tevreden bent — hieronder de stappen die u dan als cliënt kunt ondernemen."
-        />
+        <p className="eyebrow mb-4">Klachtenprocedure</p>
+        <h1 className="text-4xl font-extrabold text-balance">Niet tevreden? Dit zijn uw stappen</h1>
+        <p className="mt-6 text-muted text-pretty leading-relaxed">
+          Wij van Bureau Think Positive doen ons best om onze dienstverlening zo goed mogelijk uit
+          te voeren. Bij de uitvoering daarvan kan het voorkomen dat u niet tevreden bent —
+          hieronder de stappen die u dan als cliënt kunt ondernemen.
+        </p>
 
         <div className="mt-12 flex flex-col gap-6">
           {stappen.map((s, i) => (

@@ -17,7 +17,7 @@ const DOEL_STATUS_LABELS: Record<string, string> = {
 const AGENDA_TYPE_LABELS: Record<string, string> = {
   individueel: "Individueel",
   midweek_groep: "Midweek groepsbegeleiding",
-  weekend_groep: "Weekendbegeleiding",
+  weekend_groep: "Weekend groepsbegeleiding",
 };
 
 export default async function PortaalDashboardPage() {

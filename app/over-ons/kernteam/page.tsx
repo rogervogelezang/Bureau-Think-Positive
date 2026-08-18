@@ -3,7 +3,10 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 
-export const metadata: Metadata = { title: "Het kernteam" };
+export const metadata: Metadata = {
+  title: "Het kernteam",
+  description: "Maak kennis met het kernteam van Bureau Think Positive — ervaren zorgprofessionals met ieder hun eigen expertise.",
+};
 
 const teamMembers = [
   { name: "Mark van Onselen", role: "Lid kernteam", photo: "/kernteam/mark-van-onselen.jpg" },
@@ -16,6 +19,7 @@ export default function KernteamPage() {
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Het kernteam"
           title="De mensen achter Bureau Think Positive"
           intro="Oprichter en zorg coördinator, aangevuld met een team van zeer gedreven en ervaren zorgprofessionals — elk met hun eigen expertise en skills."
@@ -35,7 +39,7 @@ export default function KernteamPage() {
             <h3 className="font-display text-2xl font-extrabold">Roger Vogelezang</h3>
             <p className="mt-1 font-semibold text-primary">Oprichter &amp; zorg coördinator</p>
             <p className="mt-4 text-muted text-pretty leading-relaxed">
-              Hbo Culturele en Maatschappelijke Vorming (Haagsche Hogeschool, 1995). Werkte
+              Hbo Culturele en Maatschappelijke Vorming (Haagse Hogeschool, 1995). Werkte
               jarenlang als interim agressiecoach, sociotherapeut en specialistisch psychiatrisch
               begeleider voordat hij in 2011 Bureau Think Positive oprichtte. Case manager,
               agressiecoach, crisismanager en specialistisch ambulant begeleider ineen — met een

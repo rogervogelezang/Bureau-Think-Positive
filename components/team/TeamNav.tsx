@@ -39,7 +39,7 @@ export default function TeamNav({
         <div className="flex items-center gap-3 text-sm">
           <span className="text-muted">{naam}</span>
           <form action={signOutAction}>
-            <button type="submit" className="btn btn-outline text-xs">
+            <button type="submit" className="btn btn-outline">
               Uitloggen
             </button>
           </form>

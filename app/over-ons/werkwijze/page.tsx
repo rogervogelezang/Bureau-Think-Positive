@@ -3,7 +3,10 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 
-export const metadata: Metadata = { title: "Onze werkwijze" };
+export const metadata: Metadata = {
+  title: "Onze werkwijze",
+  description: "De methodieken achter Bureau Think Positive: de meewerkend coach, Triple-C en oplossingsgericht werken.",
+};
 
 const methodieken = [
   {
@@ -28,6 +31,7 @@ export default function WerkwijzePage() {
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Onze werkwijze"
           title="No-nonsense, projectmatig en oplossingsgericht"
           intro="We gebruiken de uitgangspunten van de moderne positieve psychologie om krachten aan te boren en hindernissen te overkomen. Op basis van jarenlange ervaring werkt onze aanpak: op één enkele uitzondering na zijn alle jongeren die bij ons een traject volgden er goed van af gekomen."

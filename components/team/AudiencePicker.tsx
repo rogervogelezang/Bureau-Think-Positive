@@ -25,8 +25,8 @@ export default function AudiencePicker({
   }
 
   return (
-    <div>
-      <label className="mb-1 block text-sm text-muted">Voor wie is dit zichtbaar?</label>
+    <fieldset className="m-0 border-0 p-0">
+      <legend className="mb-1 block p-0 text-sm text-muted">Voor wie is dit zichtbaar?</legend>
       <div className="flex flex-col gap-2 rounded-[var(--radius-sm)] border border-border p-3 max-h-56 overflow-y-auto">
         <label className="flex items-center gap-2 border-b border-border pb-2 text-sm font-semibold">
           <input type="checkbox" checked={alleGeselecteerd} onChange={toggleAlle} />
@@ -43,6 +43,6 @@ export default function AudiencePicker({
       {selected.map((id) => (
         <input key={id} type="hidden" name={name} value={id} />
       ))}
-    </div>
+    </fieldset>
   );
 }

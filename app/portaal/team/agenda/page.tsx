@@ -4,6 +4,7 @@ import TeamNav from "@/components/team/TeamNav";
 import AudiencePicker from "@/components/team/AudiencePicker";
 import { requireTrajectleider } from "@/lib/supabase/trajectleider";
 import { createClient } from "@/lib/supabase/server";
+import { joinKinderenNamen } from "@/lib/kinderenNames";
 import { createAgendaItemAction, deleteAgendaItemAction } from "./actions";
 
 export const metadata: Metadata = { title: "Agenda" };
@@ -11,13 +12,14 @@ export const metadata: Metadata = { title: "Agenda" };
 const TYPE_LABELS: Record<string, string> = {
   individueel: "Individueel",
   midweek_groep: "Midweek groepsbegeleiding",
-  weekend_groep: "Weekendbegeleiding",
+  weekend_groep: "Weekend groepsbegeleiding",
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
   velden_verplicht: "Vul een titel, startdatum en minimaal één gezin in.",
   aanmaken_mislukt: "Aanmaken van het agenda-item is niet gelukt.",
   deelnemers_mislukt: "Het item is aangemaakt, maar koppelen van deelnemers is niet gelukt.",
+  verwijderen_mislukt: "Verwijderen van het agenda-item is niet gelukt.",
 };
 
 export default async function TeamAgendaPage({
@@ -63,7 +65,7 @@ export default async function TeamAgendaPage({
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <p className="eyebrow mb-1">{TYPE_LABELS[item.type] ?? item.type}</p>
-                      <h3 className="font-display text-lg font-bold">{item.titel}</h3>
+                      <h2 className="font-display text-lg font-bold">{item.titel}</h2>
                       <p className="mt-1 text-sm text-muted">
                         {new Date(item.start_at).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" })}
                         {item.end_at &&
@@ -71,20 +73,12 @@ export default async function TeamAgendaPage({
                       </p>
                       {item.beschrijving && <p className="mt-2 text-sm text-muted">{item.beschrijving}</p>}
                       <p className="mt-2 text-xs text-muted">
-                        Voor:{" "}
-                        {(item.agenda_deelnemers ?? [])
-                          // Without generated Supabase types, this many-to-one embed is inferred as
-                          // an array even though Postgrest returns a single object at runtime — `any`
-                          // avoids fighting the wrong inferred shape.
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          .map((d: any) => d.kinderen?.naam)
-                          .filter(Boolean)
-                          .join(", ") || "—"}
+                        Voor: {joinKinderenNamen(item.agenda_deelnemers ?? [])}
                       </p>
                     </div>
                     <form action={deleteAgendaItemAction}>
                       <input type="hidden" name="id" value={item.id} />
-                      <button type="submit" className="text-xs text-danger hover:underline">
+                      <button type="submit" className="btn btn-outline text-xs text-danger">
                         Verwijderen
                       </button>
                     </form>
@@ -96,7 +90,7 @@ export default async function TeamAgendaPage({
           </div>
 
           <div className="card h-fit p-6">
-            <h2 className="font-display text-lg font-bold">Nieuw item</h2>
+            <h3 className="font-display text-lg font-bold">Nieuw item</h3>
             <form action={createAgendaItemAction} className="mt-4 flex flex-col gap-3">
               <div>
                 <label htmlFor="titel" className="mb-1 block text-sm text-muted">
@@ -111,7 +105,7 @@ export default async function TeamAgendaPage({
                 <select id="type" name="type" className="input-field" defaultValue="individueel">
                   <option value="individueel">Individueel</option>
                   <option value="midweek_groep">Midweek groepsbegeleiding</option>
-                  <option value="weekend_groep">Weekendbegeleiding</option>
+                  <option value="weekend_groep">Weekend groepsbegeleiding</option>
                 </select>
               </div>
               <div>

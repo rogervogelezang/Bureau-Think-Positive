@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Container from "@/components/Container";
 import { voorwaardenIntro, voorwaardenArtikelen, voorwaardenFooterNote } from "@/lib/voorwaardenContent";
 
-export const metadata: Metadata = { title: "Algemene voorwaarden" };
+export const metadata: Metadata = {
+  title: "Algemene voorwaarden",
+  description: "De algemene voorwaarden van Bureau Think Positive B.V.",
+};
 
 export default function VoorwaardenPage() {
   return (

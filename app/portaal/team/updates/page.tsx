@@ -4,6 +4,7 @@ import TeamNav from "@/components/team/TeamNav";
 import AudiencePicker from "@/components/team/AudiencePicker";
 import { requireTrajectleider } from "@/lib/supabase/trajectleider";
 import { createClient } from "@/lib/supabase/server";
+import { joinKinderenNamen } from "@/lib/kinderenNames";
 import { createUpdateAction, deleteUpdateAction } from "./actions";
 
 export const metadata: Metadata = { title: "Updates" };
@@ -12,6 +13,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   velden_verplicht: "Vul een titel, bericht en minimaal één gezin in.",
   aanmaken_mislukt: "Versturen van de update is niet gelukt.",
   ontvangers_mislukt: "De update is aangemaakt, maar koppelen van ontvangers is niet gelukt.",
+  verwijderen_mislukt: "Verwijderen van de update is niet gelukt.",
 };
 
 export default async function TeamUpdatesPage({
@@ -56,26 +58,18 @@ export default async function TeamUpdatesPage({
                 <div key={u.id} className="card p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-display text-lg font-bold">{u.titel}</h3>
+                      <h2 className="font-display text-lg font-bold">{u.titel}</h2>
                       <p className="mt-1 text-xs text-muted">
                         {new Date(u.created_at).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" })}
                       </p>
                       <p className="mt-2 text-sm text-muted text-pretty">{u.bericht}</p>
                       <p className="mt-2 text-xs text-muted">
-                        Naar:{" "}
-                        {(u.update_ontvangers ?? [])
-                          // Without generated Supabase types, this many-to-one embed is inferred as
-                          // an array even though Postgrest returns a single object at runtime — `any`
-                          // avoids fighting the wrong inferred shape.
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          .map((o: any) => o.kinderen?.naam)
-                          .filter(Boolean)
-                          .join(", ") || "—"}
+                        Naar: {joinKinderenNamen(u.update_ontvangers ?? [])}
                       </p>
                     </div>
                     <form action={deleteUpdateAction}>
                       <input type="hidden" name="id" value={u.id} />
-                      <button type="submit" className="text-xs text-danger hover:underline">
+                      <button type="submit" className="btn btn-outline text-xs text-danger">
                         Verwijderen
                       </button>
                     </form>
@@ -87,7 +81,7 @@ export default async function TeamUpdatesPage({
           </div>
 
           <div className="card h-fit p-6">
-            <h2 className="font-display text-lg font-bold">Nieuwe update</h2>
+            <h3 className="font-display text-lg font-bold">Nieuwe update</h3>
             <form action={createUpdateAction} className="mt-4 flex flex-col gap-3">
               <div>
                 <label htmlFor="titel" className="mb-1 block text-sm text-muted">

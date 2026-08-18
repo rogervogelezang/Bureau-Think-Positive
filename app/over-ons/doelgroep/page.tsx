@@ -4,13 +4,17 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { doelgroepen } from "@/lib/nav";
 
-export const metadata: Metadata = { title: "Doelgroep" };
+export const metadata: Metadata = {
+  title: "Doelgroep",
+  description: "Voor wie is Bureau Think Positive er? Ontdek onze doelgroepen, van gezinnen tot zorg- en onderwijsinstellingen.",
+};
 
 export default function DoelgroepHubPage() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Voor wie zijn wij"
           title="Wij zijn er voor..."
           intro="Van particuliere gezinnen tot zorginstellingen en scholen — ontdek hoe we per doelgroep ondersteunen."

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Container from "@/components/Container";
+import SectionHeading from "@/components/SectionHeading";
 import { getAllKennisbankSlugs, getKennisbankArticle, getAllKennisbankArticles } from "@/lib/kennisbank";
 
 export function generateStaticParams() {
@@ -16,7 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = getKennisbankArticle(slug);
-  return { title: article?.title ?? "Kennisbank" };
+  return {
+    title: article?.title ?? "Kennisbank",
+    description: article?.description,
+    alternates: { canonical: `/kennisbank/${slug}` },
+  };
 }
 
 export default async function KennisbankArticlePage({
@@ -53,7 +58,7 @@ export default async function KennisbankArticlePage({
 
       {related.length > 0 && (
         <Container className="mt-16 pt-16 border-t border-border">
-          <h2 className="font-display text-lg font-extrabold">Ook interessant</h2>
+          <SectionHeading eyebrow="Verder lezen" title="Ook interessant" />
           <div className="mt-6 flex flex-wrap gap-3">
             {related.map((a) => (
               <Link

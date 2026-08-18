@@ -3,7 +3,11 @@ import Container from "@/components/Container";
 import HoneypotFields from "@/components/HoneypotFields";
 import { submitContactFormAction } from "./actions";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Neem contact op met Bureau Think Positive voor een vrijblijvend oriënterend gesprek over ambulante begeleiding, crisisinterventie of coaching.",
+};
 
 const kenmerken = ["Kleinschalig", "Korte lijnen", "No-nonsensmentaliteit", "Bevoegd en bekwaam", "Hart voor de jongeren"];
 

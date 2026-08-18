@@ -3,7 +3,10 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import TestimonialCard from "@/components/TestimonialCard";
 
-export const metadata: Metadata = { title: "Referenties" };
+export const metadata: Metadata = {
+  title: "Referenties",
+  description: "Ervaringen van ouders en gezinnen die door Bureau Think Positive zijn begeleid.",
+};
 
 const testimonials = [
   {
@@ -58,6 +61,7 @@ export default function ReferentiesPage() {
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Wat anderen zeggen"
           title="Enkele referenties"
           intro="Van collega-professionals tot ouders die het traject zelf hebben meegemaakt."

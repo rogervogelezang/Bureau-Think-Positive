@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import Container from "@/components/Container";
 import TeamNav from "@/components/team/TeamNav";
-import { requireTrajectleider } from "@/lib/supabase/trajectleider";
+import { requireCoordinator } from "@/lib/supabase/trajectleider";
 import { createClient } from "@/lib/supabase/server";
 import { inviteTrajectleiderAction, toggleCoordinatorAction, deleteTrajectleiderAction } from "./actions";
 
@@ -13,8 +12,13 @@ const ERROR_MESSAGES: Record<string, string> = {
   uitnodigen_mislukt: "Uitnodigen is niet gelukt — bestaat dit e-mailadres al?",
   opslaan_mislukt: "De uitnodiging is verstuurd, maar opslaan als trajectleider is niet gelukt.",
   kan_zichzelf_niet_verwijderen: "Je kunt je eigen account niet verwijderen.",
+  status_wijzigen_mislukt: "Wijzigen van de coördinator-status is niet gelukt.",
+  // Deleting the auth user fails on any FK still pointing at them — not
+  // just kinderen (voortgang_scores/agenda_items/updates all reference
+  // trajectleider_id too), so this message stays deliberately generic
+  // rather than naming one specific cause.
   verwijderen_mislukt:
-    "Verwijderen is niet gelukt — deze trajectleider heeft nog gezinnen toegewezen. Wijs die eerst opnieuw toe via de detailpagina van elk gezin.",
+    "Verwijderen is niet gelukt — deze trajectleider heeft nog gekoppelde gegevens (gezinnen, scores, agenda-items of updates). Wijs gezinnen eerst opnieuw toe via de detailpagina van elk gezin; voor scores/agenda-items/updates is handmatige opschoning nodig.",
 };
 
 export default async function BeheerPage({
@@ -22,8 +26,7 @@ export default async function BeheerPage({
 }: {
   searchParams: Promise<{ error?: string; uitgenodigd?: string; verwijderd?: string }>;
 }) {
-  const trajectleider = await requireTrajectleider();
-  if (!trajectleider.is_coordinator) redirect("/portaal/team/dashboard");
+  const trajectleider = await requireCoordinator();
 
   const { error, uitgenodigd, verwijderd } = await searchParams;
   const supabase = await createClient();

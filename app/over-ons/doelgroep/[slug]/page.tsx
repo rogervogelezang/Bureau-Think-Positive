@@ -17,7 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const item = doelgroepen.find((d) => d.slug === slug);
-  return { title: item ? `Voor ${item.label.toLowerCase()}` : "Doelgroep" };
+  return {
+    title: item ? `Voor ${item.label.toLowerCase()}` : "Doelgroep",
+    description: item?.summary,
+    alternates: { canonical: `/over-ons/doelgroep/${slug}` },
+  };
 }
 
 export default async function DoelgroepDetailPage({
@@ -32,12 +36,12 @@ export default async function DoelgroepDetailPage({
 
   return (
     <section className="py-16 sm:py-20">
-      <Container>
+      <Container className="max-w-3xl">
         <p className="eyebrow mb-4">Doelgroep</p>
         <h1 className="text-4xl font-extrabold text-balance">Voor {item.label.toLowerCase()}</h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted text-pretty">{details.intro}</p>
+        <p className="mt-4 text-lg text-muted text-pretty">{details.intro}</p>
 
-        <ul className="mt-10 flex flex-col gap-4 max-w-2xl">
+        <ul className="mt-10 flex flex-col gap-4">
           {details.bullets.map((b) => (
             <li key={b} className="card flex gap-4 p-5">
               <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary-dark">

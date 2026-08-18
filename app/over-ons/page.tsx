@@ -3,7 +3,10 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import PlaceholderBlock from "@/components/PlaceholderBlock";
 
-export const metadata: Metadata = { title: "Over ons" };
+export const metadata: Metadata = {
+  title: "Over ons",
+  description: "Het verhaal, de visie en de missie van Bureau Think Positive — sinds 2011 actief in de complexe jeugdzorg.",
+};
 
 export default function OverOnsPage() {
   return (
@@ -15,11 +18,12 @@ export default function OverOnsPage() {
             <h1 className="text-4xl font-extrabold text-balance">Ons verhaal</h1>
             <div className="mt-6 flex flex-col gap-4 text-muted text-pretty leading-relaxed">
               <p>
-                Bureau &lsquo;De crisisspecialist&rsquo; is in 2011 opgericht door Roger
-                Vogelezang (Hbo Culturele en Maatschappelijke Vorming, Haagsche Hogeschool,
-                1995), met het oorspronkelijke doel te werken aan vastgelopen cliënten in de
-                complexe zorg — vaak mensen met een verstandelijke beperking en de nodige
-                psychiatrische problematiek, bij wie sprake was van een (dreigende) crisis.
+                Bureau Think Positive is in 2011 opgericht door Roger Vogelezang (Hbo Culturele
+                en Maatschappelijke Vorming, Haagse Hogeschool, 1995) — destijds onder de naam
+                &lsquo;De Crisisspecialist&rsquo; — met het oorspronkelijke doel te werken aan
+                vastgelopen cliënten in de complexe zorg — vaak mensen met een verstandelijke
+                beperking en de nodige psychiatrische problematiek, bij wie sprake was van een
+                (dreigende) crisis.
               </p>
               <p>
                 Na jaren als interim agressiecoach, sociotherapeut en specialistisch

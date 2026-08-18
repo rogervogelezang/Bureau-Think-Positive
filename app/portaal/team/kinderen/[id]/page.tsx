@@ -17,6 +17,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   email_verplicht: "Vul een e-mailadres in.",
   ouder_niet_gevonden: "Geen account gevonden met dit e-mailadres — de ouder moet eerst zelf een account aanmaken.",
   koppelen_mislukt: "Koppelen is niet gelukt.",
+  doel_status_mislukt: "Bijwerken van de doelstatus is niet gelukt.",
+  toewijzen_mislukt: "Toewijzen aan een andere trajectleider is niet gelukt.",
 };
 
 const DOEL_STATUSSEN = [
@@ -168,7 +170,12 @@ export default async function KindDetailPage({
                   <form action={updateDoelStatusAction} className="flex items-center gap-2">
                     <input type="hidden" name="kind_id" value={kind.id} />
                     <input type="hidden" name="doel_id" value={d.id} />
-                    <select name="status" defaultValue={d.status} className="input-field !w-auto py-1.5 text-sm">
+                    <select
+                      name="status"
+                      aria-label={`Status van ${d.titel}`}
+                      defaultValue={d.status}
+                      className="input-field !w-auto py-1.5 text-sm"
+                    >
                       {DOEL_STATUSSEN.map((s) => (
                         <option key={s.value} value={s.value}>
                           {s.label}
@@ -185,7 +192,13 @@ export default async function KindDetailPage({
             </div>
             <form action={addDoelAction} className="mt-4 flex flex-wrap gap-3">
               <input type="hidden" name="kind_id" value={kind.id} />
-              <input name="titel" placeholder="Nieuw doel..." required className="input-field flex-1" />
+              <input
+                name="titel"
+                placeholder="Nieuw doel..."
+                aria-label="Nieuw doel"
+                required
+                className="input-field flex-1"
+              />
               <button type="submit" className="btn btn-primary">
                 Toevoegen
               </button>

@@ -47,7 +47,8 @@ export async function deleteAgendaItemAction(formData: FormData) {
   await requireTrajectleider();
   const id = formData.get("id")?.toString() ?? "";
   const supabase = await createClient();
-  await supabase.from("agenda_items").delete().eq("id", id);
+  const { error } = await supabase.from("agenda_items").delete().eq("id", id);
+  if (error) redirect("/portaal/team/agenda?error=verwijderen_mislukt");
   revalidatePath("/portaal/team/agenda");
   redirect("/portaal/team/agenda");
 }

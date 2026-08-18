@@ -37,7 +37,8 @@ export async function deleteUpdateAction(formData: FormData) {
   await requireTrajectleider();
   const id = formData.get("id")?.toString() ?? "";
   const supabase = await createClient();
-  await supabase.from("updates").delete().eq("id", id);
+  const { error } = await supabase.from("updates").delete().eq("id", id);
+  if (error) redirect("/portaal/team/updates?error=verwijderen_mislukt");
   revalidatePath("/portaal/team/updates");
   redirect("/portaal/team/updates");
 }

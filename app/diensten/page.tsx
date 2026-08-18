@@ -4,13 +4,18 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { diensten } from "@/lib/nav";
 
-export const metadata: Metadata = { title: "Diensten" };
+export const metadata: Metadata = {
+  title: "Diensten",
+  description:
+    "Van ambulante begeleiding en opvoedingsondersteuning tot crisisinterventie en coaching — het complete dienstenpakket van Bureau Think Positive.",
+};
 
 export default function DienstenHubPage() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow="Wat we doen"
           title="Onze diensten"
           intro="Wij bieden een integraal pakket: van gespecialiseerde ambulante begeleiding en opvoedingsondersteuning tot crisisinterventie en coaching. Projectmatig en oplossingsgericht, met als doel de jongere en zijn/haar systeem zo snel mogelijk weer te laten functioneren."

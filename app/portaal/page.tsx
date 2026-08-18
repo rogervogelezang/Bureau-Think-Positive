@@ -4,7 +4,10 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import PlaceholderBlock from "@/components/PlaceholderBlock";
 
-export const metadata: Metadata = { title: "Ouderportaal" };
+export const metadata: Metadata = {
+  title: "Ouderportaal",
+  description: "Log in op het ouderportaal van Bureau Think Positive voor voortgang, doelen, agenda en updates over het traject van uw kind.",
+};
 
 const features = [
   {
@@ -27,7 +30,7 @@ const features = [
 
 export default function PortaalPage() {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-16 sm:py-20">
       <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
         <div>
           <p className="eyebrow mb-4">Voor ouders &amp; verzorgers</p>
@@ -68,7 +71,7 @@ export default function PortaalPage() {
         </p>
         <p className="mt-4 text-xs text-muted">
           Bureau Think Positive medewerker?{" "}
-          <Link href="/portaal/team/login" className="hover:underline">
+          <Link href="/portaal/team/login" className="font-semibold text-primary hover:underline">
             Log hier in
           </Link>
           .

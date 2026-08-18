@@ -17,7 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const item = diensten.find((d) => d.slug === slug);
-  return { title: item?.label ?? "Dienst" };
+  return {
+    title: item?.label ?? "Dienst",
+    description: item?.summary,
+    alternates: { canonical: `/diensten/${slug}` },
+  };
 }
 
 export default async function DienstDetailPage({

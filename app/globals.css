@@ -26,8 +26,8 @@
   --coral: #f0684a;
   --coral-light: #fde5df;
 
-  --border: #e7e0d3;
-  --danger: #d1453b;
+  --border: #c9bda3;
+  --danger: #a8362d;
 
   --radius-sm: 0.75rem;
   --radius-md: 1.25rem;
@@ -164,7 +164,7 @@ h4 {
   }
   .btn-primary:hover {
     background: var(--accent-dark);
-    color: white;
+    color: var(--primary-dark);
     box-shadow: 0 4px 14px rgba(201, 130, 15, 0.35);
   }
 
