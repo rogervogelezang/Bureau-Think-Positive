@@ -17,9 +17,9 @@ export default function Header() {
       className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur"
       style={{ viewTransitionName: "site-header" }}
     >
-      <div className="container-page flex h-20 items-center justify-between">
+      <div className="container-page flex h-28 items-center justify-between">
         <Link href="/" className="flex items-center">
-          <img src="/logo.svg" alt="Bureau Think Positive" className="h-16 w-auto" />
+          <img src="/logo.svg" alt="Bureau Think Positive" className="h-24 w-auto" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
