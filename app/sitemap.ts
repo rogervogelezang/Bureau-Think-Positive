@@ -5,7 +5,10 @@ import { getAllKennisbankSlugs } from "@/lib/kennisbank";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-  const staticPaths = [
+  // Every one of these has an /en-prefixed English mirror at the same
+  // segment/slug (see the i18n plan) — /portaal is the sole exception,
+  // it's a Dutch-only tool with no English page to list.
+  const translatedStaticPaths = [
     "/",
     "/over-ons",
     "/over-ons/kernteam",
@@ -15,18 +18,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kennisbank",
     "/referenties",
     "/contact",
-    "/portaal",
     "/voorwaarden",
     "/klachtenprocedure",
   ];
 
-  const dynamicPaths = [
+  const translatedDynamicPaths = [
     ...diensten.map((d) => `/diensten/${d.slug}`),
     ...doelgroepen.map((d) => `/over-ons/doelgroep/${d.slug}`),
     ...getAllKennisbankSlugs().map((slug) => `/kennisbank/${slug}`),
   ];
 
-  return [...staticPaths, ...dynamicPaths].map((path) => ({
+  const nlOnlyPaths = ["/portaal"];
+
+  const allPaths = [...translatedStaticPaths, ...translatedDynamicPaths];
+  const enPaths = allPaths.map((path) => (path === "/" ? "/en" : `/en${path}`));
+
+  return [...allPaths, ...nlOnlyPaths, ...enPaths].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
   }));

@@ -2,11 +2,30 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { mainNav } from "@/lib/nav";
+import { mainNav as mainNavNl } from "@/lib/nav";
+import { mainNav as mainNavEn } from "@/lib/nav.en";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-export default function Header() {
+const COPY = {
+  nl: {
+    home: "/",
+    portaal: { href: "/portaal", label: "Ouderportaal" },
+    contact: { href: "/contact", label: "Neem contact op" },
+    submenuLabel: (label: string) => `${label} submenu tonen`,
+  },
+  en: {
+    home: "/en",
+    portaal: { href: "/portaal", label: "Parent portal" },
+    contact: { href: "/en/contact", label: "Get in touch" },
+    submenuLabel: (label: string) => `Show ${label} submenu`,
+  },
+};
+
+export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const mainNav = lang === "en" ? mainNavEn : mainNavNl;
+  const t = COPY[lang];
 
   function toggleExpanded(href: string) {
     setExpanded((prev) => ({ ...prev, [href]: !prev[href] }));
@@ -18,7 +37,7 @@ export default function Header() {
       style={{ viewTransitionName: "site-header" }}
     >
       <div className="container-page flex h-28 items-center justify-between">
-        <Link href="/" className="flex items-center">
+        <Link href={t.home} className="flex items-center">
           <img src="/logo.svg" alt="Bureau Think Positive" className="h-24 w-auto" />
         </Link>
 
@@ -56,11 +75,12 @@ export default function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link href="/portaal" className="btn btn-outline text-sm">
-            Ouderportaal
+          <LanguageSwitcher lang={lang} />
+          <Link href={t.portaal.href} className="btn btn-outline text-sm">
+            {t.portaal.label}
           </Link>
-          <Link href="/contact" className="btn btn-primary text-sm">
-            Neem contact op
+          <Link href={t.contact.href} className="btn btn-primary text-sm">
+            {t.contact.label}
           </Link>
         </div>
 
@@ -95,7 +115,7 @@ export default function Header() {
                       type="button"
                       onClick={() => toggleExpanded(item.href)}
                       aria-expanded={!!expanded[item.href]}
-                      aria-label={`${item.label} submenu tonen`}
+                      aria-label={t.submenuLabel(item.label)}
                       className="flex h-9 w-9 shrink-0 items-center justify-center text-muted"
                     >
                       <svg
@@ -127,11 +147,15 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <Link href="/portaal" onClick={() => setMobileOpen(false)} className="btn btn-outline mt-2 w-full">
-              Ouderportaal
+            <div className="mt-2 flex items-center justify-between px-3">
+              <span className="text-sm text-muted">{lang === "nl" ? "Taal" : "Language"}</span>
+              <LanguageSwitcher lang={lang} />
+            </div>
+            <Link href={t.portaal.href} onClick={() => setMobileOpen(false)} className="btn btn-outline mt-2 w-full">
+              {t.portaal.label}
             </Link>
-            <Link href="/contact" onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
-              Neem contact op
+            <Link href={t.contact.href} onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
+              {t.contact.label}
             </Link>
           </div>
         </div>

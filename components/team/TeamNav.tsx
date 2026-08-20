@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signOutAction } from "@/app/portaal/team/actions";
+import { signOutAction } from "@/app/(nl)/portaal/team/actions";
 
 const BASE_LINKS = [
   { href: "/portaal/team/dashboard", label: "Gezinnen", key: "dashboard" },

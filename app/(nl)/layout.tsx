@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Manrope, Inter } from "next/font/google";
 import { ViewTransition } from "react";
+import { heading, body } from "@/lib/fonts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import "./globals.css";
-
-const heading = Manrope({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
-const body = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
+import "../globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const DEFAULT_DESCRIPTION =
@@ -39,9 +28,12 @@ export const metadata: Metadata = {
     title: "Bureau Think Positive — Jeugdzorg met een positieve aanpak",
     description: DEFAULT_DESCRIPTION,
   },
+  alternates: {
+    languages: { "nl-NL": "/", "en-US": "/en" },
+  },
 };
 
-export default function RootLayout({
+export default function DutchRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -49,14 +41,14 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <Header />
+        <Header lang="nl" />
         <main className="flex-1">
           {/* Header/Footer live outside this boundary on purpose, so they
               stay static — only the page content itself cross-fades between
               routes. See ::view-transition-old/new(*) in globals.css. */}
           <ViewTransition>{children}</ViewTransition>
         </main>
-        <Footer />
+        <Footer lang="nl" />
       </body>
     </html>
   );
