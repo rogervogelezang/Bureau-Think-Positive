@@ -39,7 +39,7 @@ export default function DutchRootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={`${heading.variable} ${body.variable} h-full`}>
+    <html lang="nl" data-scroll-behavior="smooth" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
         <Header lang="nl" />
         <main className="flex-1">

@@ -39,7 +39,7 @@ export default function EnglishRootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${heading.variable} ${body.variable} h-full`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
         <Header lang="en" />
         <main className="flex-1">
