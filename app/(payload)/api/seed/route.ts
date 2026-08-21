@@ -149,14 +149,14 @@ export async function GET() {
       roleNl: "Lid kernteam",
       roleEn: "Core team member",
       photo: media.markPhoto,
-      email: "M.vanonselen@bureauthinkpositive.com",
+      email: "m.vanonselen@bureauthinkpositive.com",
     },
     {
       name: "Silvia de Brabander",
       roleNl: "Lid kernteam",
       roleEn: "Core team member",
       photo: media.silviaPhoto,
-      email: "S.debrabander@bureauthinkpositive.com",
+      email: "s.debrabander@bureauthinkpositive.com",
     },
     {
       name: "Diana Eskens Lodder",
