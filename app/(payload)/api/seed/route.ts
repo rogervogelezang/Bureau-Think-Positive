@@ -138,6 +138,7 @@ export async function GET() {
       roleNl: "Oprichter & zorg coördinator",
       roleEn: "Founder & care coordinator",
       photo: media.rogerPhoto,
+      email: "info@bureauthinkpositive.com",
       bioNl:
         "Hbo Culturele en Maatschappelijke Vorming (Haagse Hogeschool, 1995). Werkte jarenlang als interim agressiecoach, sociotherapeut en specialistisch psychiatrisch begeleider voordat hij in 2011 Bureau Think Positive oprichtte. Case manager, agressiecoach, crisismanager en specialistisch ambulant begeleider ineen — met een trackrecord dat onder meer de Van der Hoeven Kliniek (TBS) in Utrecht omvat.",
       bioEn:
