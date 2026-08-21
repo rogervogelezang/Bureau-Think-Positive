@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { heading, body } from "@/lib/fonts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getSiteData } from "@/lib/siteData";
 import "../globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -33,19 +34,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function EnglishRootLayout({
+export default async function EnglishRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { siteSettings, header, footer, services, targetGroups } = await getSiteData("en");
+
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <Header lang="en" />
+        <Header lang="en" siteSettings={siteSettings} header={header} />
         <main className="flex-1">
           <ViewTransition>{children}</ViewTransition>
         </main>
-        <Footer lang="en" />
+        <Footer lang="en" siteSettings={siteSettings} footer={footer} services={services} targetGroups={targetGroups} />
       </body>
     </html>
   );

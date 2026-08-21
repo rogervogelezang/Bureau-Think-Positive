@@ -21,3 +21,9 @@ npm-debug.log*
 
 # vercel
 .vercel
+
+# payload
+payload-types.ts
+payload-dev.db
+payload-dev.db-*
+media/

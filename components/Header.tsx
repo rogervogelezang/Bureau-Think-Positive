@@ -2,28 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { mainNav as mainNavNl } from "@/lib/nav";
-import { mainNav as mainNavEn } from "@/lib/nav.en";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import type { HeaderGlobal, SiteSettingsGlobal, Media } from "@/lib/payloadTypes";
 
-const COPY = {
-  nl: {
-    home: "/",
-    contact: { href: "/contact", label: "Neem contact op" },
-    submenuLabel: (label: string) => `${label} submenu tonen`,
-  },
-  en: {
-    home: "/en",
-    contact: { href: "/en/contact", label: "Get in touch" },
-    submenuLabel: (label: string) => `Show ${label} submenu`,
-  },
-};
-
-export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
+export default function Header({
+  lang = "nl",
+  siteSettings,
+  header,
+}: {
+  lang?: "nl" | "en";
+  siteSettings: SiteSettingsGlobal;
+  header: HeaderGlobal;
+}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
-  const mainNav = lang === "en" ? mainNavEn : mainNavNl;
-  const t = COPY[lang];
+  const navItems = header.navItems ?? [];
+  const homeHref = lang === "en" ? "/en" : "/";
+  const logo = typeof siteSettings.logo === "object" ? (siteSettings.logo as Media) : null;
+  const submenuLabel = (label: string) => (lang === "en" ? `Show ${label} submenu` : `${label} submenu tonen`);
 
   function toggleExpanded(href: string) {
     setExpanded((prev) => ({ ...prev, [href]: !prev[href] }));
@@ -35,25 +31,25 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
       style={{ viewTransitionName: "site-header" }}
     >
       <div className="container-page flex h-28 items-center justify-between">
-        <Link href={t.home} className="flex items-center">
-          <img src="/logo.svg" alt="Bureau Think Positive" className="h-24 w-auto" />
+        <Link href={homeHref} className="flex items-center">
+          {logo?.url && <img src={logo.url} alt={logo.alt} className="h-24 w-auto" />}
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
-          {mainNav.map((item) => (
+          {navItems.map((item) => (
             <div key={item.href} className="group relative">
               <Link
                 href={item.href}
                 className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-foreground hover:bg-primary-light hover:text-primary-dark"
               >
                 {item.label}
-                {item.children && (
+                {item.children && item.children.length > 0 && (
                   <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden>
                     <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
                 )}
               </Link>
-              {item.children && (
+              {item.children && item.children.length > 0 && (
                 <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                   <div className="card min-w-64 p-2">
                     {item.children.map((child) => (
@@ -74,9 +70,11 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
 
         <div className="hidden lg:flex items-center gap-3">
           <LanguageSwitcher lang={lang} />
-          <Link href={t.contact.href} className="btn btn-primary text-sm">
-            {t.contact.label}
-          </Link>
+          {header.contactCtaLabel && header.contactCtaHref && (
+            <Link href={header.contactCtaHref} className="btn btn-primary text-sm">
+              {header.contactCtaLabel}
+            </Link>
+          )}
         </div>
 
         <button
@@ -95,7 +93,7 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
       {mobileOpen && (
         <div className="lg:hidden border-t border-border bg-background max-h-[calc(100dvh-5rem)] overflow-y-auto">
           <div className="container-page py-4 flex flex-col gap-1">
-            {mainNav.map((item) => (
+            {navItems.map((item) => (
               <div key={item.href} className="mb-1">
                 <div className="flex items-center">
                   <Link
@@ -105,12 +103,12 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
                   >
                     {item.label}
                   </Link>
-                  {item.children && (
+                  {item.children && item.children.length > 0 && (
                     <button
                       type="button"
                       onClick={() => toggleExpanded(item.href)}
                       aria-expanded={!!expanded[item.href]}
-                      aria-label={t.submenuLabel(item.label)}
+                      aria-label={submenuLabel(item.label)}
                       className="flex h-9 w-9 shrink-0 items-center justify-center text-muted"
                     >
                       <svg
@@ -126,7 +124,7 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
                     </button>
                   )}
                 </div>
-                {item.children && expanded[item.href] && (
+                {item.children && item.children.length > 0 && expanded[item.href] && (
                   <div className="ml-3 flex flex-col">
                     {item.children.map((child) => (
                       <Link
@@ -146,9 +144,11 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
               <span className="text-sm text-muted">{lang === "nl" ? "Taal" : "Language"}</span>
               <LanguageSwitcher lang={lang} />
             </div>
-            <Link href={t.contact.href} onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
-              {t.contact.label}
-            </Link>
+            {header.contactCtaLabel && header.contactCtaHref && (
+              <Link href={header.contactCtaHref} onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
+                {header.contactCtaLabel}
+              </Link>
+            )}
           </div>
         </div>
       )}

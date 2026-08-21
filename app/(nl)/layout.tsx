@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { heading, body } from "@/lib/fonts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getSiteData } from "@/lib/siteData";
 import "../globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -33,22 +34,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DutchRootLayout({
+export default async function DutchRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { siteSettings, header, footer, services, targetGroups } = await getSiteData("nl");
+
   return (
     <html lang="nl" data-scroll-behavior="smooth" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
-        <Header lang="nl" />
+        <Header lang="nl" siteSettings={siteSettings} header={header} />
         <main className="flex-1">
           {/* Header/Footer live outside this boundary on purpose, so they
               stay static — only the page content itself cross-fades between
               routes. See ::view-transition-old/new(*) in globals.css. */}
           <ViewTransition>{children}</ViewTransition>
         </main>
-        <Footer lang="nl" />
+        <Footer lang="nl" siteSettings={siteSettings} footer={footer} services={services} targetGroups={targetGroups} />
       </body>
     </html>
   );
