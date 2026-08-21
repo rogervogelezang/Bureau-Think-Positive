@@ -117,6 +117,11 @@ export async function GET() {
         order: i,
       },
     });
+    // bullets isn't itself localized (only its "text" subfield is), so row
+    // structure/ids are shared across locales — the en update must reuse
+    // the ids the nl create() just returned, or Payload replaces the rows
+    // outright and the nl text is lost (see the header.navItems fix above).
+    const savedBullets = (doc.bullets ?? []) as { id: string }[];
     await payload.update({
       collection: "target-groups",
       id: doc.id,
@@ -125,7 +130,7 @@ export async function GET() {
         label: en.label,
         summary: en.summary,
         intro: detailEn.intro,
-        bullets: detailEn.bullets.map((text) => ({ text })),
+        bullets: detailEn.bullets.map((text, j) => ({ id: savedBullets[j].id, text })),
       },
     });
   }
