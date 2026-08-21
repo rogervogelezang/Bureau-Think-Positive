@@ -32,6 +32,14 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "dev-only-insecure-secret-change-in-production",
   db,
   editor: lexicalEditor(),
+  admin: {
+    components: {
+      graphics: {
+        Logo: "/components/admin/AdminLogo#AdminLogo",
+        Icon: "/components/admin/AdminIcon#AdminIcon",
+      },
+    },
+  },
   collections: [Users, Media, Pages, Services, TargetGroups, TeamMembers],
   globals: [SiteSettings, Header, Footer],
   localization: {
