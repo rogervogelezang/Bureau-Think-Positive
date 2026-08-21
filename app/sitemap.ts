@@ -6,8 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   // Every one of these has an /en-prefixed English mirror at the same
-  // segment/slug (see the i18n plan) — /portaal is the sole exception,
-  // it's a Dutch-only tool with no English page to list.
+  // segment/slug (see the i18n plan).
   const translatedStaticPaths = [
     "/",
     "/over-ons",
@@ -28,12 +27,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getAllKennisbankSlugs().map((slug) => `/kennisbank/${slug}`),
   ];
 
-  const nlOnlyPaths = ["/portaal"];
-
   const allPaths = [...translatedStaticPaths, ...translatedDynamicPaths];
   const enPaths = allPaths.map((path) => (path === "/" ? "/en" : `/en${path}`));
 
-  return [...allPaths, ...nlOnlyPaths, ...enPaths].map((path) => ({
+  return [...allPaths, ...enPaths].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
   }));

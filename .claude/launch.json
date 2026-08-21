@@ -5,7 +5,7 @@
       "name": "bureau-think-positive",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "cwd": "C:\\Users\\Mustafa Yardimci\\Desktop\\Claude\\Vercel\\Bureau-Think-Positive",
+      "cwd": "C:\\Users\\Mustafa Yardimci\\.claude\\projects\\New site BTP",
       "port": 3010
     }
   ]

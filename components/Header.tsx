@@ -9,13 +9,11 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 const COPY = {
   nl: {
     home: "/",
-    portaal: { href: "/portaal", label: "Ouderportaal" },
     contact: { href: "/contact", label: "Neem contact op" },
     submenuLabel: (label: string) => `${label} submenu tonen`,
   },
   en: {
     home: "/en",
-    portaal: { href: "/portaal", label: "Parent portal" },
     contact: { href: "/en/contact", label: "Get in touch" },
     submenuLabel: (label: string) => `Show ${label} submenu`,
   },
@@ -76,9 +74,6 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
 
         <div className="hidden lg:flex items-center gap-3">
           <LanguageSwitcher lang={lang} />
-          <Link href={t.portaal.href} className="btn btn-outline text-sm">
-            {t.portaal.label}
-          </Link>
           <Link href={t.contact.href} className="btn btn-primary text-sm">
             {t.contact.label}
           </Link>
@@ -151,9 +146,6 @@ export default function Header({ lang = "nl" }: { lang?: "nl" | "en" }) {
               <span className="text-sm text-muted">{lang === "nl" ? "Taal" : "Language"}</span>
               <LanguageSwitcher lang={lang} />
             </div>
-            <Link href={t.portaal.href} onClick={() => setMobileOpen(false)} className="btn btn-outline mt-2 w-full">
-              {t.portaal.label}
-            </Link>
             <Link href={t.contact.href} onClick={() => setMobileOpen(false)} className="btn btn-primary mt-2 w-full">
               {t.contact.label}
             </Link>

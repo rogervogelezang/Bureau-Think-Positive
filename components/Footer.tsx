@@ -26,7 +26,6 @@ const COPY = {
     bureauHeading: "Bureau",
     kernteam: { href: "/over-ons/kernteam", label: "Het kernteam" },
     kennisbank: { href: "/kennisbank", label: "Kennisbank" },
-    portaal: { href: "/portaal", label: "Ouderportaal" },
     voorwaarden: { href: "/voorwaarden", label: "Algemene voorwaarden" },
     klachtenprocedure: { href: "/klachtenprocedure", label: "Klachtenprocedure" },
     keurmerkenHeading: "Keurmerken",
@@ -39,7 +38,6 @@ const COPY = {
     bureauHeading: "About",
     kernteam: { href: "/en/over-ons/kernteam", label: "The core team" },
     kennisbank: { href: "/en/kennisbank", label: "Knowledge base" },
-    portaal: { href: "/portaal", label: "Parent portal" },
     voorwaarden: { href: "/en/voorwaarden", label: "Terms and conditions" },
     klachtenprocedure: { href: "/en/klachtenprocedure", label: "Complaints procedure" },
     keurmerkenHeading: "Certifications",
@@ -110,11 +108,6 @@ export default function Footer({ lang = "nl" }: { lang?: "nl" | "en" }) {
             <li>
               <Link href={t.kennisbank.href} className="hover:text-white">
                 {t.kennisbank.label}
-              </Link>
-            </li>
-            <li>
-              <Link href={t.portaal.href} className="hover:text-white">
-                {t.portaal.label}
               </Link>
             </li>
             <li>
