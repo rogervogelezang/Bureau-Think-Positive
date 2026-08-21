@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Container from "@/components/Container";
-import HoneypotFields from "@/components/HoneypotFields";
+import ContactFormCard from "@/components/ContactFormCard";
 import { submitContactFormAction } from "./actions";
 
 export const metadata: Metadata = {
@@ -11,13 +12,7 @@ export const metadata: Metadata = {
 
 const kenmerken = ["Small-scale", "Short lines of communication", "No-nonsense mentality", "Qualified and skilled", "A heart for young people"];
 
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ sent?: string; error?: string }>;
-}) {
-  const { sent, error } = await searchParams;
-
+export default function ContactPage() {
   return (
     <section className="py-16 sm:py-20">
       <Container className="grid gap-12 lg:grid-cols-2">
@@ -53,58 +48,9 @@ export default async function ContactPage({
           </div>
         </div>
 
-        <div className="card p-8">
-          <h2 className="font-display text-xl font-bold">Contact form</h2>
-
-          {sent ? (
-            <p className="mt-6 rounded-[var(--radius-sm)] border border-primary/30 bg-primary-light p-4 text-sm text-primary-dark">
-              Thanks for your message — we&rsquo;ll get back to you as soon as possible.
-            </p>
-          ) : (
-            <form action={submitContactFormAction} className="mt-6 flex flex-col gap-4">
-              {error === "missing_fields" && (
-                <p className="rounded-[var(--radius-sm)] border border-danger/30 bg-coral-light p-4 text-sm text-danger">
-                  Please fill in all required fields.
-                </p>
-              )}
-              {error === "invalid_email" && (
-                <p className="rounded-[var(--radius-sm)] border border-danger/30 bg-coral-light p-4 text-sm text-danger">
-                  This doesn&rsquo;t look like a valid email address.
-                </p>
-              )}
-
-              <HoneypotFields />
-
-              <div>
-                <label htmlFor="name" className="mb-1 block text-sm text-muted">
-                  Name
-                </label>
-                <input id="name" name="name" required className="input-field" />
-              </div>
-              <div>
-                <label htmlFor="email" className="mb-1 block text-sm text-muted">
-                  Email address
-                </label>
-                <input id="email" name="email" type="email" required className="input-field" />
-              </div>
-              <div>
-                <label htmlFor="phone" className="mb-1 block text-sm text-muted">
-                  Phone number (optional)
-                </label>
-                <input id="phone" name="phone" type="tel" className="input-field" />
-              </div>
-              <div>
-                <label htmlFor="message" className="mb-1 block text-sm text-muted">
-                  Message
-                </label>
-                <textarea id="message" name="message" required rows={5} className="input-field resize-y" />
-              </div>
-              <button type="submit" className="btn btn-primary w-full">
-                Send message
-              </button>
-            </form>
-          )}
-        </div>
+        <Suspense fallback={<div className="card p-8" />}>
+          <ContactFormCard lang="en" action={submitContactFormAction} />
+        </Suspense>
       </Container>
     </section>
   );
