@@ -17,7 +17,10 @@ export const dienstenContent: Record<string, string[]> = {
   "crisis-interventie": [
     "Een crisis vraagt om een frisse blik van buitenaf — niet gekleurd door de binnen de instelling geldende opvattingen. Het vraagt om een coach die het proces van dichtbij stuurt, niet vanuit een kantoor maar van binnenuit: op de leefgroep of afdeling zelf, waar de crisis zich voordoet. Een coach die voordoet hoe agressie aangepakt wordt, hoe met de crisis en de vastgelopen cliënt om te gaan, en hoe de rust daarna geconsolideerd wordt.",
     "Onze 30-dagen aanpak is gericht op het beslechten van de crisis binnen vier weken. Na een oriënterend gesprek met de behandelverantwoordelijke en teamleider volgen vier weken die moeten leiden tot een aanmerkelijke verbetering.",
-    "Week 1: observeren als extra begeleider op de groep, eerste hulp bij agressie, en een uitgebreide inventarisatie van de uitgangssituatie (dossier, ondersteuningsplan, signaleringsplan). Week 2: verder tot de kern van de crisissituatie komen en het bestaande dagprogramma en signaleringsplan toetsen. Week 3: de rol verschuift van begeleider naar coach — een stap terug, met feedback en advies, en een vernieuwd signaleringsplan. Week 4: de nieuwe aanpak doorzetten en bewaken, met een eindevaluatie samen met de persoonlijk begeleider, agoog en teamleider.",
+    "Week 1: observeren als extra begeleider op de groep, eerste hulp bij agressie, en een uitgebreide inventarisatie van de uitgangssituatie (dossier, ondersteuningsplan, signaleringsplan).",
+    "Week 2: verder tot de kern van de crisissituatie komen en het bestaande dagprogramma en signaleringsplan toetsen.",
+    "Week 3: de rol verschuift van begeleider naar coach — een stap terug, met feedback en advies, en een vernieuwd signaleringsplan.",
+    "Week 4: de nieuwe aanpak doorzetten en bewaken, met een eindevaluatie samen met de persoonlijk begeleider, agoog en teamleider.",
     "Ook na deze vier weken blijven we beschikbaar met advies — telefonisch of per mail, zo vaak als nodig.",
   ],
   "trainingen-op-maat": [

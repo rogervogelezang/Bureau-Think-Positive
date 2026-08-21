@@ -17,7 +17,10 @@ export const dienstenContent: Record<string, string[]> = {
   "crisis-interventie": [
     "A crisis calls for a fresh outside perspective — not coloured by the views held within the institution. It calls for a coach who steers the process up close, not from an office but from the inside: in the living group or ward itself, where the crisis is unfolding. A coach who demonstrates how to tackle aggression, how to handle the crisis and the client who has become stuck, and how to consolidate calm afterwards.",
     "Our 30-day approach is aimed at resolving the crisis within four weeks. After an introductory conversation with the treatment coordinator and team leader, four weeks follow that should lead to a significant improvement.",
-    "Week 1: observing as an extra support worker within the group, first response to aggression, and a thorough inventory of the starting situation (file, support plan, early-warning plan). Week 2: getting further to the core of the crisis situation and testing the existing daily programme and early-warning plan. Week 3: the role shifts from support worker to coach — a step back, with feedback and advice, and a renewed early-warning plan. Week 4: continuing and monitoring the new approach, with a final evaluation together with the personal support worker, social pedagogue and team leader.",
+    "Week 1: observing as an extra support worker within the group, first response to aggression, and a thorough inventory of the starting situation (file, support plan, early-warning plan).",
+    "Week 2: getting further to the core of the crisis situation and testing the existing daily programme and early-warning plan.",
+    "Week 3: the role shifts from support worker to coach — a step back, with feedback and advice, and a renewed early-warning plan.",
+    "Week 4: continuing and monitoring the new approach, with a final evaluation together with the personal support worker, social pedagogue and team leader.",
     "Even after these four weeks, we remain available for advice — by phone or email, as often as needed.",
   ],
   "trainingen-op-maat": [
