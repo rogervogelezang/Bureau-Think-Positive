@@ -143,16 +143,34 @@ export async function GET() {
       bioEn:
         "Bachelor's degree in Cultural and Social Development (Haagse Hogeschool, 1995). Worked for many years as an interim aggression coach, socio-therapist and specialist psychiatric support worker before founding Bureau Think Positive in 2011. Case manager, aggression coach, crisis manager and specialist in-home support worker all in one — with a track record that includes the Van der Hoeven Kliniek (TBS) in Utrecht.",
     },
-    { name: "Mark van Onselen", roleNl: "Lid kernteam", roleEn: "Core team member", photo: media.markPhoto },
-    { name: "Silvia de Brabander", roleNl: "Lid kernteam", roleEn: "Core team member", photo: media.silviaPhoto },
-    { name: "Diana Eskens Lodder", roleNl: "Lid kernteam", roleEn: "Core team member", photo: media.dianaPhoto },
+    {
+      name: "Mark van Onselen",
+      roleNl: "Lid kernteam",
+      roleEn: "Core team member",
+      photo: media.markPhoto,
+      email: "M.vanonselen@bureauthinkpositive.com",
+    },
+    {
+      name: "Silvia de Brabander",
+      roleNl: "Lid kernteam",
+      roleEn: "Core team member",
+      photo: media.silviaPhoto,
+      email: "S.debrabander@bureauthinkpositive.com",
+    },
+    {
+      name: "Diana Eskens Lodder",
+      roleNl: "Lid kernteam",
+      roleEn: "Core team member",
+      photo: media.dianaPhoto,
+      email: "d.eskes-lodder@bureauthinkpositive.com",
+    },
   ];
   for (let i = 0; i < team.length; i++) {
     const m = team[i];
     const doc = await payload.create({
       collection: "team-members",
       locale: "nl",
-      data: { name: m.name, role: m.roleNl, bio: m.bioNl, photo: m.photo, order: i },
+      data: { name: m.name, role: m.roleNl, email: m.email, bio: m.bioNl, photo: m.photo, order: i },
     });
     await payload.update({
       collection: "team-members",

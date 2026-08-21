@@ -14,6 +14,7 @@ export const TeamMembers: CollectionConfig = {
   fields: [
     { name: "name", type: "text", required: true },
     { name: "role", type: "text", required: true, localized: true },
+    { name: "email", type: "email" },
     { name: "bio", type: "textarea", localized: true },
     { name: "photo", type: "upload", relationTo: "media" },
     { name: "order", type: "number", defaultValue: 0 },

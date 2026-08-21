@@ -125,6 +125,7 @@ export type TeamMember = {
   id: number;
   name: string;
   role: string;
+  email?: string | null;
   bio?: string | null;
   photo?: Media | number | null;
   order?: number | null;

@@ -33,6 +33,11 @@ export default async function TeamGridBlock({ eyebrow, title, intro, locale }: T
             <div>
               <h3 className="font-display text-2xl font-extrabold">{featured.name}</h3>
               <p className="mt-1 font-semibold text-primary">{featured.role}</p>
+              {featured.email && (
+                <a href={`mailto:${featured.email}`} className="mt-1 inline-block text-sm text-muted hover:text-primary">
+                  {featured.email}
+                </a>
+              )}
               {featured.bio && <p className="mt-4 text-muted text-pretty leading-relaxed">{featured.bio}</p>}
             </div>
           </div>
@@ -53,6 +58,11 @@ export default async function TeamGridBlock({ eyebrow, title, intro, locale }: T
                     )}
                     <p className="mt-4 font-semibold">{m.name}</p>
                     <p className="text-sm text-muted">{m.role}</p>
+                    {m.email && (
+                      <a href={`mailto:${m.email}`} className="mt-1 inline-block text-xs text-muted hover:text-primary">
+                        {m.email}
+                      </a>
+                    )}
                   </div>
                 );
               })}
