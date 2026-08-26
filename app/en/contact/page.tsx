@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Container from "@/components/Container";
 import ContactFormCard from "@/components/ContactFormCard";
+import ContactFormFields from "@/components/ContactFormFields";
 import { submitContactFormAction } from "./actions";
 
 export const metadata: Metadata = {
@@ -48,7 +49,14 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <Suspense fallback={<div className="card p-8" />}>
+        <Suspense
+          fallback={
+            <div className="card p-8">
+              <h2 className="font-display text-xl font-bold">Contact form</h2>
+              <ContactFormFields lang="en" action={submitContactFormAction} />
+            </div>
+          }
+        >
           <ContactFormCard lang="en" action={submitContactFormAction} />
         </Suspense>
       </Container>
