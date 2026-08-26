@@ -280,16 +280,19 @@ h4 {
    and never get snapshotted — they simply stay live and static, per the
    "anchoring the header" pattern in the Next.js view-transitions guide.
 
-   Slow, unhurried timing on purpose: this should feel like the same calm
-   we bring to the young people we guide, not a snappy UI flourish. The
-   old page settles away before the new one gently arrives, rather than
-   both racing past each other at once.
+   Gentle but prompt: a soft fade+settle rather than an abrupt cut, but
+   short enough that the new page doesn't feel like it's making you wait.
+   An earlier version ran 780ms end to end (420ms out, then a 620ms fade
+   in after a 160ms hold) — technically calm, but long enough that it
+   read as lag rather than composure. This keeps the same easing
+   character at roughly 40% of the duration: the old page steps back,
+   the new one arrives a beat later, total settle time ~320ms.
    ============================================================ */
 ::view-transition-old(*) {
-  animation: page-fade-out 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: page-fade-out 200ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 ::view-transition-new(*) {
-  animation: page-fade-in 620ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
+  animation: page-fade-in 260ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
 }
 
 ::view-transition-group(site-header),
