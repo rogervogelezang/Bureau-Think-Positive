@@ -16,6 +16,7 @@ export default function Header({
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [desktopOpen, setDesktopOpen] = useState<Record<string, boolean>>({});
   const navItems = header.navItems ?? [];
   const homeHref = lang === "en" ? "/en" : "/";
   const logo = typeof siteSettings.logo === "object" ? (siteSettings.logo as Media) : null;
@@ -23,6 +24,10 @@ export default function Header({
 
   function toggleExpanded(href: string) {
     setExpanded((prev) => ({ ...prev, [href]: !prev[href] }));
+  }
+
+  function toggleDesktopOpen(href: string) {
+    setDesktopOpen((prev) => ({ ...prev, [href]: !prev[href] }));
   }
 
   return (
@@ -38,24 +43,46 @@ export default function Header({
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <div key={item.href} className="group relative">
-              <Link
-                href={item.href}
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-foreground hover:bg-primary-light hover:text-primary-dark"
-              >
-                {item.label}
+              <div className="flex items-center">
+                <Link
+                  href={item.href}
+                  className="rounded-full px-4 py-2 text-sm font-semibold text-foreground hover:bg-primary-light hover:text-primary-dark"
+                >
+                  {item.label}
+                </Link>
                 {item.children && item.children.length > 0 && (
-                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden>
-                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                  <button
+                    type="button"
+                    onClick={() => toggleDesktopOpen(item.href)}
+                    aria-expanded={!!desktopOpen[item.href]}
+                    aria-label={submenuLabel(item.label)}
+                    className="flex h-11 w-11 shrink-0 items-center justify-center text-foreground hover:text-primary-dark"
+                  >
+                    <svg
+                      width="10"
+                      height="6"
+                      viewBox="0 0 10 6"
+                      fill="none"
+                      aria-hidden
+                      className={`transition-transform ${desktopOpen[item.href] ? "rotate-180" : ""}`}
+                    >
+                      <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </button>
                 )}
-              </Link>
+              </div>
               {item.children && item.children.length > 0 && (
-                <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div
+                  className={`absolute left-0 top-full pt-2 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${
+                    desktopOpen[item.href] ? "visible opacity-100" : "invisible opacity-0"
+                  }`}
+                >
                   <div className="card min-w-64 p-2">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
+                        onClick={() => setDesktopOpen((prev) => ({ ...prev, [item.href]: false }))}
                         className="block rounded-[var(--radius-sm)] px-4 py-2 text-sm font-medium text-foreground hover:bg-primary-light hover:text-primary-dark"
                       >
                         {child.label}
@@ -80,7 +107,7 @@ export default function Header({
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
-          className="lg:hidden flex h-10 w-10 items-center justify-center rounded-full border border-border"
+          className="lg:hidden flex h-11 w-11 items-center justify-center rounded-full border border-border"
           aria-expanded={mobileOpen}
           aria-label="Menu"
         >
@@ -109,7 +136,7 @@ export default function Header({
                       onClick={() => toggleExpanded(item.href)}
                       aria-expanded={!!expanded[item.href]}
                       aria-label={submenuLabel(item.label)}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center text-muted"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center text-muted"
                     >
                       <svg
                         width="12"

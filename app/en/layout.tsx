@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { heading, body } from "@/lib/fonts";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FocusMainOnNavigate from "@/components/FocusMainOnNavigate";
 import { getSiteData } from "@/lib/siteData";
 import "../globals.css";
 
@@ -44,8 +45,15 @@ export default async function EnglishRootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${heading.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
         <Header lang="en" siteSettings={siteSettings} header={header} />
-        <main className="flex-1">
+        <FocusMainOnNavigate />
+        <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
           <ViewTransition>{children}</ViewTransition>
         </main>
         <Footer lang="en" siteSettings={siteSettings} footer={footer} services={services} targetGroups={targetGroups} />
