@@ -6,6 +6,13 @@ import type { CollectionConfig } from "payload";
 // is configured).
 export const Media: CollectionConfig = {
   slug: "media",
+  labels: {
+    singular: { nl: "Afbeelding", en: "Media" },
+    plural: { nl: "Afbeeldingen", en: "Media" },
+  },
+  admin: {
+    group: { nl: "Gebruikers en media", en: "Users and Media" },
+  },
   access: {
     read: () => true,
   },
@@ -15,6 +22,10 @@ export const Media: CollectionConfig = {
       type: "text",
       required: true,
       localized: true,
+      label: "Alternatieve tekst",
+      admin: {
+        description: "Korte omschrijving van de afbeelding, voor schermlezers en als de afbeelding niet kan laden. Bijv. \"Roger Vogelezang, oprichter\".",
+      },
     },
   ],
   upload: {

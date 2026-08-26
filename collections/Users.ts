@@ -6,8 +6,13 @@ import type { CollectionConfig } from "payload";
 export const Users: CollectionConfig = {
   slug: "users",
   auth: true,
+  labels: {
+    singular: { nl: "Gebruiker", en: "User" },
+    plural: { nl: "Gebruikers", en: "Users" },
+  },
   admin: {
     useAsTitle: "email",
+    group: { nl: "Gebruikers en media", en: "Users and Media" },
   },
   fields: [],
 };

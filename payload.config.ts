@@ -5,6 +5,8 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { nl } from "@payloadcms/translations/languages/nl";
+import { en } from "@payloadcms/translations/languages/en";
 
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -40,7 +42,13 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Pages, Services, TargetGroups, TeamMembers],
+  i18n: {
+    fallbackLanguage: "nl",
+    supportedLanguages: { nl, en },
+  },
+  // Order here drives both the sidebar group order and item order within
+  // each group — Pages first since it's the most-edited content.
+  collections: [Pages, Services, TargetGroups, TeamMembers, Users, Media],
   globals: [SiteSettings, Header, Footer],
   localization: {
     locales: [

@@ -5,12 +5,16 @@ import { revalidatePath } from "next/cache";
 // business's contact details.
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
+  label: { nl: "Site-instellingen", en: "Site Settings" },
+  admin: {
+    group: { nl: "Instellingen", en: "Settings" },
+  },
   fields: [
-    { name: "logo", type: "upload", relationTo: "media", required: true },
-    { name: "siteName", type: "text", defaultValue: "Bureau Think Positive" },
-    { name: "street", type: "text", required: true },
-    { name: "postalCodeAndCity", type: "text", required: true },
-    { name: "phone", type: "text", required: true },
+    { name: "logo", type: "upload", relationTo: "media", required: true, label: "Logo" },
+    { name: "siteName", type: "text", defaultValue: "Bureau Think Positive", label: "Bedrijfsnaam" },
+    { name: "street", type: "text", required: true, label: "Straat en huisnummer" },
+    { name: "postalCodeAndCity", type: "text", required: true, label: "Postcode en plaats" },
+    { name: "phone", type: "text", required: true, label: "Telefoonnummer" },
   ],
   hooks: {
     afterChange: [
