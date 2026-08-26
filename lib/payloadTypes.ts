@@ -151,6 +151,8 @@ export type FooterGlobal = {
   bureauLinks?: FooterLink[] | null;
   keurmerkenHeading?: string | null;
   keurmerken?: Keurmerk[] | null;
+  facebookUrl?: string | null;
+  instagramUrl?: string | null;
 };
 
 export type SiteSettingsGlobal = {

@@ -26,6 +26,16 @@ export const Footer: GlobalConfig = {
         { name: "alt", type: "text", required: true, localized: true },
       ],
     },
+    {
+      name: "facebookUrl",
+      type: "text",
+      admin: { description: "Volledige link naar de Facebook-pagina, bijv. https://facebook.com/bureauthinkpositive. Leeg laten om het icoon te verbergen." },
+    },
+    {
+      name: "instagramUrl",
+      type: "text",
+      admin: { description: "Volledige link naar het Instagram-profiel, bijv. https://instagram.com/bureauthinkpositive. Leeg laten om het icoon te verbergen." },
+    },
   ],
   hooks: {
     afterChange: [

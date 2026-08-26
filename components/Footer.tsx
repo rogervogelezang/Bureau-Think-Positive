@@ -81,6 +81,41 @@ export default function Footer({
         </div>
       </div>
 
+      {(footer.facebookUrl || footer.instagramUrl) && (
+        <div className="border-t border-white/10 py-6">
+          <div className="container-page flex justify-end gap-3">
+            {footer.facebookUrl && (
+              <a
+                href={footer.facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/70 hover:border-white/40 hover:text-white transition"
+              >
+                <svg width="16" height="16" viewBox="0 0 320 512" fill="currentColor" aria-hidden>
+                  <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                </svg>
+              </a>
+            )}
+            {footer.instagramUrl && (
+              <a
+                href={footer.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/70 hover:border-white/40 hover:text-white transition"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
       {(footer.keurmerken ?? []).length > 0 && (
         <div className="border-t border-white/10 py-8">
           <div className="container-page">
