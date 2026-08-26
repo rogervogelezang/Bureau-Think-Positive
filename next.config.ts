@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
     return legacyRedirects;
   },
   // Powers the soft cross-fade between pages — see <ViewTransition> in
-  // app/layout.tsx and the ::view-transition-old/new(*) rules in
-  // app/globals.css.
+  // app/(nl)/layout.tsx and app/en/layout.tsx, and the
+  // ::view-transition-old/new(*) rules in app/globals.css.
   experimental: {
     viewTransition: true,
   },

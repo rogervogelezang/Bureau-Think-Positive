@@ -13,19 +13,47 @@ export default function RenderBlocks({ blocks, locale }: { blocks: PageBlock[]; 
       {blocks.map((block, i) => {
         switch (block.blockType) {
           case "hero":
-            return <HeroBlock key={i} {...block} />;
+            return (
+              <div className="reveal" key={i}>
+                <HeroBlock {...block} />
+              </div>
+            );
           case "richText":
-            return <RichTextBlock key={i} {...block} />;
+            return (
+              <div className="reveal" key={i}>
+                <RichTextBlock {...block} />
+              </div>
+            );
           case "serviceGrid":
-            return <ServiceGridBlock key={i} {...block} locale={locale} />;
+            return (
+              <div className="reveal" key={i}>
+                <ServiceGridBlock {...block} locale={locale} />
+              </div>
+            );
           case "targetGroupGrid":
-            return <TargetGroupGridBlock key={i} {...block} locale={locale} />;
+            return (
+              <div className="reveal" key={i}>
+                <TargetGroupGridBlock {...block} locale={locale} />
+              </div>
+            );
           case "teamGrid":
-            return <TeamGridBlock key={i} {...block} locale={locale} />;
+            return (
+              <div className="reveal" key={i}>
+                <TeamGridBlock {...block} locale={locale} />
+              </div>
+            );
           case "whyUs":
-            return <WhyUsBlock key={i} {...block} />;
+            return (
+              <div className="reveal" key={i}>
+                <WhyUsBlock {...block} />
+              </div>
+            );
           case "cta":
-            return <CTABlock key={i} {...block} />;
+            return (
+              <div className="reveal" key={i}>
+                <CTABlock {...block} />
+              </div>
+            );
           default:
             return null;
         }

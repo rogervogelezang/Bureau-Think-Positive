@@ -57,6 +57,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -270,54 +276,90 @@ h4 {
 
 /* ============================================================
    Page transitions — the <ViewTransition> wrapping {children} in
-   app/layout.tsx only covers the main content, but the browser's native
-   View Transitions API snapshots the whole viewport by default (including
-   Header/Footer), so a wildcard fade would briefly freeze them mid-
-   interaction — e.g. a hover dropdown caught open at the moment of
-   navigation stays visible, frozen, for the whole transition. Header and
-   Footer get their own view-transition-name (see components/Header.tsx,
-   components/Footer.tsx) so they're excluded from the wildcard rule below
-   and never get snapshotted — they simply stay live and static, per the
-   "anchoring the header" pattern in the Next.js view-transitions guide.
+   app/(nl)/layout.tsx and app/en/layout.tsx only covers the main content,
+   but the browser's native View Transitions API snapshots the whole
+   viewport by default (including Header/Footer), so a wildcard fade would
+   briefly freeze them mid-interaction — e.g. a hover dropdown caught open
+   at the moment of navigation stays visible, frozen, for the whole
+   transition. Header and Footer get their own view-transition-name (see
+   components/Header.tsx, components/Footer.tsx) so they're excluded from
+   the wildcard rule below and never get snapshotted — they simply stay
+   live and static, per the "anchoring the header" pattern in the Next.js
+   view-transitions guide. SectionSubNav (components/SectionSubNav.tsx)
+   gets the same treatment for the same reason.
 
-   Gentle but prompt: a soft fade+settle rather than an abrupt cut, but
+   Gentle but prompt: a soft slide+settle rather than an abrupt cut, but
    short enough that the new page doesn't feel like it's making you wait.
-   An earlier version ran 780ms end to end (420ms out, then a 620ms fade
-   in after a 160ms hold) — technically calm, but long enough that it
-   read as lag rather than composure. This keeps the same easing
-   character at roughly 40% of the duration: the old page steps back,
-   the new one arrives a beat later, total settle time ~320ms.
+   An earlier version ran 780ms end to end — technically calm, but long
+   enough that it read as lag rather than composure; a later pass cut it
+   to a plain ~320ms fade+scale. This keeps that same total time budget
+   (deliberately NOT growing it — a bigger distance is not the same as a
+   longer wait) and gets a "slide + depth-push" feel from asymmetric
+   translateY instead: the outgoing page barely moves (attention has
+   already left), the incoming page arrives from further down, both
+   strictly transform/opacity (compositor-only, no box-shadow/filter).
    ============================================================ */
 ::view-transition-old(*) {
-  animation: page-fade-out 200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: page-fade-out 190ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 ::view-transition-new(*) {
-  animation: page-fade-in 260ms cubic-bezier(0.16, 1, 0.3, 1) 60ms both;
+  animation: page-fade-in 250ms cubic-bezier(0.16, 1, 0.3, 1) 55ms both;
 }
 
 ::view-transition-group(site-header),
-::view-transition-group(site-footer) {
+::view-transition-group(site-footer),
+::view-transition-group(section-subnav) {
   animation: none;
 }
 ::view-transition-old(site-header),
-::view-transition-old(site-footer) {
+::view-transition-old(site-footer),
+::view-transition-old(section-subnav) {
   display: none;
 }
 ::view-transition-new(site-header),
-::view-transition-new(site-footer) {
+::view-transition-new(site-footer),
+::view-transition-new(section-subnav) {
   animation: none;
 }
 
 @keyframes page-fade-out {
   to {
     opacity: 0;
-    transform: scale(0.99);
+    transform: translateY(-8px) scale(0.985);
   }
 }
 @keyframes page-fade-in {
   from {
     opacity: 0;
-    transform: scale(1.008);
+    transform: translateY(18px) scale(1.01);
+  }
+}
+
+/* Scroll-triggered reveal for CMS page-builder blocks (see .reveal usage
+   in components/blocks/RenderBlocks.tsx) — pure CSS scroll-driven
+   animation, deliberately not JS/IntersectionObserver-based: the browser
+   derives the current state from actual scroll position continuously, so
+   there's no hydration-timing race that could flash above-the-fold
+   content invisible before popping in. Browsers without
+   animation-timeline support (@supports gate below) just see fully
+   visible, unanimated content — an acceptable degradation. */
+@keyframes block-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: block-reveal-in cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
   }
 }
 

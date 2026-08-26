@@ -11,7 +11,7 @@ export default function SectionSubNav({
   const pathname = usePathname();
 
   return (
-    <div className="border-b border-border bg-primary-light/40">
+    <div className="border-b border-border bg-primary-light/40" style={{ viewTransitionName: "section-subnav" }}>
       <div className="container-page flex gap-1 overflow-x-auto py-3">
         {items.map((item) => {
           const active = pathname === item.href;
